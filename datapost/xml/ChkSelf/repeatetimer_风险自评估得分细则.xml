@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+    <!-- 以下根据需要可对数据进行加密 -->
+    <log filename='tb_fxpg_assessment_item_result_log' remark='评估得分细则' runmodel='repeatetimer' isvaldata='false' >
+        <CheckColumnSQL>select COLUMN_NAME from information_schema.COLUMNS where TABLE_SCHEMA='@[dbname]' and TABLE_NAME='tb_assessment_result' and COLUMN_NAME='isreported'</CheckColumnSQL>
+		<AlterSQL>alter table tb_assessment_result add isreported int default 0</AlterSQL>
+		<UpdateFlagSQL>update tb_assessment_result set isreported=0 where isreported is null</UpdateFlagSQL>
+		<CheckRowSQL>
+			<![CDATA[ 
+				select TABLE_ROWS 
+				from information_schema.TABLES  
+				where TABLE_SCHEMA='@[dbname]' and TABLE_NAME='tb_assessment_result'
+				]]>
+		</CheckRowSQL>
+		<UpdateOperSQL></UpdateOperSQL>
+		<DeleteByIDSQL></DeleteByIDSQL>
+		<DataSQL>
+			<![CDATA[ 
+			    SELECT id,batchno,rootcode,rootcontent,
+				IFNULL(rootfullgrade,0) AS rootfullgrade,
+				IFNULL(rootgrade,0) AS rootgrade,
+				parentcode,parentcontent,
+				IFNULL(parentfullgrade,0) AS parentfullgrade,
+				IFNULL(parentgrade,0) AS parentgrade,itemcode,itemcontent,
+				IFNULL(itemfullgrade,0) AS itemfullgrade,
+				IFNULL(itemgrade,0) AS itemgrade,subcode,subcontent,
+				IFNULL(subfullgrade,0) AS subfullgrade,
+				IFNULL(subgrade,0) AS subgrade,itemdemand,standardcode,standardcontent,
+				IFNULL(standardfullgrade,0) AS standardfullgrade,
+				IFNULL(standardgrade,0) AS standardgrade,iscompliance,suggestion,NOW() AS impdate
+				FROM (
+						SELECT v.id,taskno, v.batchno,rootcode,rootcontent,rootfullgrade,CASE v.rootcode WHEN '1' THEN c.jsscore ELSE c.glscore END AS rootgrade,
+							v.parentcode,parentcontent,parentfullgrade,a.parentscore AS parentgrade,itemcode,itemcontent,itemfullgrade,itemgrade,subcode,
+							subcontent,subfullgrade,subgrade,itemdemand,standardcode,standardcontent,
+							standardfullgrade,standardgrade,iscompliance,suggestion 
+						FROM
+							(
+								SELECT 
+								`a`.`id` AS `id`,`a`.`batchno` AS `batchno`,`f`.`itemcode` AS `rootcode`,`f`.`itemcontent` AS `rootcontent`,CONCAT(ROUND(`f`.`grade`,4),'') AS `rootfullgrade`,`e`.`itemcode` AS `parentcode`,
+								`e`.`itemcontent` AS `parentcontent`,CONCAT(ROUND(`e`.`grade`,4),'') AS `parentfullgrade`,`d`.`itemcode` AS `itemcode`,
+								(CASE WHEN ((`h`.`secretlevel` = 'juem') AND (`h`.`itemcode` IN ('2.2.2','2.2.3','2.2.4'))) THEN CONCAT('*<br/>安<br/>全<br/>保<br/>密',
+								SUBSTR(`d`.`itemcontent`,2)) ELSE `d`.`itemcontent` END) AS `itemcontent`,CONCAT(ROUND(`d`.`grade`,4),'') AS `itemfullgrade`,
+								CONCAT(ROUND(`h`.`score`,4),'') AS `itemgrade`,`c`.`itemcode` AS `subcode`,(CASE `c`.`isreal` WHEN 'Y' THEN `c`.`itemcontent` ELSE '-' END) AS `subcontent`,
+								CONCAT(ROUND(`c`.`grade`,4),'') AS `subfullgrade`,CONCAT(ROUND(`g`.`grade`,4),'') AS `subgrade`,`c`.`itemdemand` AS `itemdemand`,`b`.`itemcode` AS `standardcode`,
+								`b`.`itemcontent` AS `standardcontent`,CONCAT(ROUND(`b`.`grade`,4),'') AS `standardfullgrade`,CONCAT(ROUND(`a`.`grade`,4),'') AS `standardgrade`,
+								(CASE `a`.`iscompliance` WHEN 'N' THEN '不符合' WHEN 'Y' THEN '符合' WHEN 'P' THEN '基本符合' END) AS `iscompliance`,`a`.`suggestion` AS `suggestion` 
+				
+								FROM (((((((
+								`tb_assessment_result` `a` JOIN `tb_assessment_standard` `b` ON(((`a`.`standardno` = `b`.`itemcode`) 
+								AND (`a`.`secretlevel` = `b`.`SecretLevel`)))) JOIN `tb_assessment_subitem` `c` ON(((`b`.`parentcode` = `c`.`itemcode`) 
+								AND (`c`.`SecretLevel` = `b`.`SecretLevel`)))) JOIN `tb_assessment_item` `d` ON((`c`.`parentcode` = `d`.`itemcode`))) 
+								JOIN `tb_assessment_itemresult` `h` ON(((`d`.`itemcode` = `h`.`itemcode`) AND (`h`.`batchno` = `a`.`batchno`)))) 
+								JOIN `tb_assessment_parentitem` `e` ON((`d`.`parentcode` = `e`.`itemcode`))) 
+								JOIN `tb_assessment_rootitem` `f` ON((`e`.`parentcode` = `f`.`itemcode`))) 
+								LEFT JOIN `tb_assessment_subitemresult` `g` ON(((`g`.`batchno` = `a`.`batchno`) 
+								AND (`g`.`subitemcode` = `b`.`parentcode`) 
+								AND (`g`.`secretlevel` = `a`.`secretlevel`)))
+								)
+								 WHERE a.isreported='0'
+						) v INNER JOIN  ( 
+							SELECT batchno,SUBSTRING_INDEX(itemcode,'.',2) parentcode,ROUND(SUM(score),4) parentscore FROM tb_assessment_itemresult
+							GROUP BY batchno,SUBSTRING_INDEX(itemcode,'.',2)) a
+							ON v.parentcode=a.parentcode AND v.batchno=a.batchno 
+							INNER JOIN tb_assessment_list c ON a.batchno = c.batchno 
+							INNER JOIN tb_chkself_task d ON c.taskno=d.taskid  
+					        WHERE tasktype=0 AND taskstatus=1 
+						)a 
+			]]>
+        </DataSQL>
+		<InsertSQL>insert into tb_fxpg_assessment_item_result(id,batchno,rootcode,rootcontent,rootfullgrade,rootgrade,parentcode,parentcontent,parentfullgrade,parentgrade,itemcode,itemcontent,itemfullgrade,itemgrade,subcode,subcontent,subfullgrade,subgrade,itemdemand,standardcode,standardcontent,standardfullgrade,standardgrade,iscompliance,suggestion,impdate,sub_sysid,sub_sysname)values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)</InsertSQL>
+   	    <SuccessSQL>update tb_assessment_result  set isreported=1 where id in(@[id]) and isreported=0</SuccessSQL>
+ 	</log>

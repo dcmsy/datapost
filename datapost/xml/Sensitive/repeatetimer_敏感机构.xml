@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+    <log filename='sensitive_org' remark='敏感信息机构' runmodel='repeatetimer' isvaldata='false' >
+        <CheckColumnSQL>select COLUMN_NAME from information_schema.COLUMNS where TABLE_SCHEMA='@[dbname]' and TABLE_NAME='mg_org' and COLUMN_NAME='reportflag'</CheckColumnSQL>
+		<AlterSQL>alter table mg_org  add reportflag int default 0</AlterSQL>
+		<UpdateFlagSQL>update mg_org set reportflag=0 where reportflag is null</UpdateFlagSQL>
+		<CheckRowSQL>select TABLE_ROWS from information_schema.TABLES  where TABLE_SCHEMA='@[dbname]' and TABLE_NAME='mg_org'</CheckRowSQL>
+		<UpdateOperSQL></UpdateOperSQL>
+		<DeleteByIDSQL></DeleteByIDSQL>
+		<DataSQL>
+			select
+			   id,
+			   name,
+			   parentid,
+			   region,
+			   now() as impdate
+			from mg_org where reportflag=0
+		limit 10000
+        </DataSQL>
+		<InsertSQL>insert into tb_mg_org(id,name,parentid,region,impdate,sub_sysid,sub_sysname)values(?,?,?,?,?,?,?)</InsertSQL>
+   	    <SuccessSQL>update mg_org set reportflag=1 where id in (@[id]) </SuccessSQL>
+ 	</log>

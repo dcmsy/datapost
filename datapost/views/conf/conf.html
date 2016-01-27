@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" /> 
+<title>数据上报服务配置</title>
+<link rel="stylesheet" type="text/css" href="/static/css/base.css">
+<link rel="stylesheet" type="text/css" href="/static/css/easyuiPage/easyui.css">
+<link rel="stylesheet" type="text/css" href="/static/css/easyuiPage/easyuinew.css">
+<link rel="stylesheet" type="text/css" href="/static/css/style.css">
+<script type="text/javascript" src="/static/js/json2.js" ></script>
+<script type="text/javascript" src="/static/js/base64.js"></script>
+</head>
+<body class="easyui-layout" fit="true">
+<div data-options="region:'north'" border="none" style="height:30px;">
+	<div class="zf-breadLine">当前位置：<span> {{.sysname}} </span></div>
+</div>
+
+<div id="maindiv" data-options="region:'center'"  border="none"> 
+	<div class="toolbar">
+		<form id='xmlForm' name='xmlForm' action="save" method="post">
+			<input type="hidden" id='dictoryname' name="dictoryname" value="" />
+			<input type="hidden" id='sysname' 	  name="sysname"     value="" />
+		</form>
+		<form id="sys_form">
+		<div class="fn-left">
+		</div>
+		</form>
+		<div class="fn-clear"></div>
+	</div>
+</div>
+
+<form id="confform" name="confform " action="" method="post">
+<table class="md-table"  id="md-talbe" width="98%" height="20px"  >
+	<tr bgcolor="#EDFCFD" >
+		<td style="border-right: 0px solid #EEE; border-top: 1px solid #EEE;padding-left:20px;" colspan='6'>
+			平台信息
+		</td>
+	</tr>
+
+	<tr>
+		<td style="border-right: 1px solid #EEE; border-top: 1px solid #EEE;padding-left:20px;" colspan='6' >
+			<table width='100%'>
+			   	<tr height="25">
+			   		<td width='100px'>
+			   			<div class="editconf">&nbsp;上报平台:</div>
+			   		</td>
+			   		<td >
+						<table width='100%'>
+							<tr height="25">
+								<td>
+								<ul style="list-style:none;">
+								{{range $k, $v := .list}}
+									{{if $v}}
+										<li style="float:left;width:100px;">
+											<input type="checkbox" name="ids" id="{{$v.Systype}}" 
+												value="{{$v.Sysname}}"  style="border:0;background:transparent;" />
+											<label for="{{$v.Systype}}" style="vertical-align: 4px;">
+												{{$v.Sysname}}&nbsp;&nbsp;&nbsp;&nbsp;
+											</label>
+										</li>
+									{{end}}
+								{{end}}
+								</ul>
+								</td>
+							</tr>
+							<tr height="25">
+								<td>
+									<ul style="list-style:none;">
+									{{range $k, $v := .list2}}
+										{{if $v}}
+											<li style="float:left;width:100px;">
+												<input type="checkbox" name="ids" id="{{$v.Systype}}" 
+													value="{{$v.Sysname}}"  style="border:0;background:transparent;" />
+												<label for="{{$v.Systype}}" style="vertical-align: 4px;">
+													{{$v.Sysname}}&nbsp;&nbsp;&nbsp;&nbsp;
+												</label>
+											</li>
+										{{end}}
+									{{end}}
+									</ul>
+								</td>
+							</tr>
+						</table>
+
+			   		</td>
+			   	</tr>
+			 </table>
+		</td>
+	</tr>
+
+	<tr bgcolor="#EDFCFD">
+		<td style="border-right: 0px solid #EEE; border-top: 1px solid #EEE;padding-left:20px;" colspan='6'>
+			{{.sysname}}数据库参数
+		</td>
+	</tr>
+	<tr >
+		<td style="border-right: 1px solid #EEE; border-top: 1px solid #EEE;padding-left:20px;" colspan='6'>
+			<table  width='100%'>
+			   	<tr height="25">
+			   		<td width='100px'> 
+			   			<div class="editconf">&nbsp;数据库IP:</div>
+			   		</td>
+			   		<td>
+			   			<input class="easyui-validatebox span3" type="text" id="f_ip" name="f_ip" data-options="required:true,validType:['ip','length[0,20]']" value="{{.config.F_ip}}" maxlength="20"style="width:100px"/>
+			   			<input type="hidden" id="f_dbtype" name="f_dbtype" value="{{.config.F_dbtype}}">
+						<input type="hidden" id="f_dbname" name="f_dbname" value="{{.config.F_dbname}}">
+					</td>
+			   		<td width='100px'>
+			   			<div class="editconf">&nbsp;端口:</div>
+			   		</td>
+			   		<td>
+			   			<input class="easyui-validatebox span3" type="text" id="f_port" name="f_port" data-options="required:true,validType:['number']" value="{{.config.F_port}}" maxlength="5"style="width:100px"/>
+			   		</td>
+			   		<td width='100px'>
+			   			<div class="editconf">&nbsp;用户名:</div>
+			   		</td>
+			   		<td>
+			   			<input class="easyui-validatebox span3" type="text" id='f_username' name="f_username" data-options="required:false,validType:['length[0,40]']" value="{{.config.F_username}}" maxlength="40"style="width:100px"/>
+			   		</td>
+			   		<td width='100px'>
+			   			<div class="editconf">&nbsp;密码:</div>
+			   		</td>
+			   		<td >
+			   			<input class="easyui-validatebox span3" type="password" id="f_password" name="f_password" data-options="required:false,validType:['length[0,40]']" value="{{.config.F_password}}" maxlength="40"style="width:100px"/>
+					</td>
+					<td >
+			   			<a class="ui-button ui-button-mblue" href="javascript:void(0);" onclick="javascript:testDb('f')"><i class="iconfont">&#xe605;</i>测试数据库连接</a>&nbsp;&nbsp;
+					</td>
+				</tr>
+			</table>
+		</td>
+	</tr>	
+	
+	<tr bgcolor="#EDFCFD">
+		<td style="border-right: 0px solid #EEE; border-top: 1px solid #EEE;padding-left:20px;" colspan='6'>
+			中间库参数
+		</td>
+	</tr>
+	<tr>
+		<td style="border-right: 1px solid #EEE; border-top: 1px solid #EEE;padding-left:20px;" colspan='6'>
+			<table  width='100%'>
+			   	<tr height="25">
+			   		<td width='100px'> 
+			   			<div class="editconf">&nbsp;数据库IP:</div>
+			   		</td>
+			   		<td>
+			   			<input class="easyui-validatebox span3" type="text" id="t_ip" name="t_ip" data-options="required:true,validType:['ip','length[0,20]']" value="{{.config.T_ip}}" maxlength="20"style="width:100px"/>
+			   			<input type="hidden" id="t_dbtype" name="t_dbtype" value="{{.config.T_dbtype}}">
+						<input type="hidden" id="t_dbname" name="t_dbname" value="{{.config.T_dbname}}">
+					</td>
+			   		<td width='100px'>
+			   			<div class="editconf">&nbsp;端口:</div>
+			   		</td>
+			   		<td>
+			   			<input class="easyui-validatebox span3" type="text" id="t_port" name="t_port" data-options="required:true,validType:['number']" value="{{.config.T_port}}" maxlength="5"style="width:100px"/>
+			   		</td>
+			   		<td width='100px'>
+			   			<div class="editconf">&nbsp;用户名:</div>
+			   		</td>
+			   		<td>
+			   			<input class="easyui-validatebox span3" type="text" id='t_username' name="t_username" data-options="required:true,validType:['length[0,40]']" value="{{.config.T_username}}" maxlength="40"style="width:100px"/>
+			   		</td>
+			   		<td width='100px'>
+			   			<div class="editconf">&nbsp;密码:</div>
+			   		</td>
+			   		<td>
+			   			<input class="easyui-validatebox span3" type="password" id="t_password" name="t_password" data-options="required:true,validType:['length[0,40]']" value="{{.config.T_password}}" maxlength="40"style="width:100px"/>
+					</td>
+					<td>
+			   			<a class="ui-button ui-button-mblue" href="javascript:void(0);" onclick="javascript:testDb('t')"><i class="iconfont">&#xe605;</i>测试数据库连接</a>&nbsp;&nbsp;
+					</td>
+				</tr>
+			</table>
+		</td>
+	</tr>
+	
+	<tr bgcolor="#EDFCFD">
+		<td style="border-right: 0px solid #EEE; border-top: 1px solid #EEE;padding-top:10px;" colspan='6'  width='100%' align='center'>
+			<div class="ui-form-item">
+				<a class="ui-button ui-button-mblue" href="javascript:void(0);" onclick="javascript:save()"><i class="iconfont">&#xf0131;</i>保存参数配置</a>&nbsp;&nbsp;						
+			</div>
+		</td>
+	</tr>
+
+</table>
+</form>
+<script type="text/javascript" src="/static/js/jquery-1.7.2.min.js"></script>
+<script type="text/javascript" src="/static/js/jquery.easyui.min.js"></script>
+<script type="text/javascript" src="/static/js/jquery.easyui-ext.js"></script>
+<script type="text/javascript">
+var systypes = '';
+var sys = '{{.config.Transferes}}';
+var nosqlsys = '{{.config.Nosql}}';
+var dirname = '{{.sys}}';
+$(function() {
+	initCheck();
+});
+
+function initCheck(){
+	if(sys.length > 0){
+		var arr = sys.split(',');
+		for(var i=0;i<arr.length;i++){
+			document.getElementById(arr[i]).checked = 'checked';
+		}
+	}
+	if(nosqlsys.length > 0){
+		var noarr = nosqlsys.split(',');
+		for(var i=0;i<noarr.length;i++){
+			document.getElementById(noarr[i]).checked = 'checked';
+		}
+	}
+}
+//测试连接
+function testDb(type){
+	var ip = '';
+	var port = '';
+	var username = '';
+	var password = '';
+	//t_dbtype t_dbname
+	var dbtype = '';
+	var dbname = '';
+	var isValid = $("#confform").form('validate');
+	_loading();
+	if(!isValid){
+		_stop();
+		return;
+	}
+	var f_password = $("#f_password").val();
+	var t_password = $("#t_password").val();
+	if(f_password!=''){
+		f_password = encode64(f_password);
+	}
+	if(t_password!=''){
+		t_password = encode64(t_password);
+	}
+	if(type == 'f'){
+		dbtype = $("#f_dbtype").val();
+		dbname = $("#f_dbname").val();
+		ip = $("#f_ip").val();
+		port = $("#f_port").val();
+		username = $("#f_username").val();
+		password = f_password;
+	}else if(type == 't'){
+		dbtype = $("#t_dbtype").val();
+		dbname = $("#t_dbname").val();
+		ip = $("#t_ip").val();
+		port = $("#t_port").val();
+		username = $("#t_username").val();
+		password = t_password;
+	}
+	var url = "/index/test";
+	var params = {
+		F_ip:ip,
+		F_port:port,
+		F_username:username,
+		F_password:password,
+		F_dbtype:dbtype,
+		F_dbname:dbname
+	};
+	try{
+	     json=JSON.stringify(params);
+	  }catch(e){
+		alert('错误：'+e)
+       json="{}";
+	}
+	$.ajax( {
+		  type : 'POST',
+		  url : url,
+		  data : {"json":json},
+		  dataType : 'text',
+		  success : function(data) {
+			var objdata = JSON.parse(data);
+			if(objdata.code == '0'){
+				$.messager.alert('提示信息', '连接成功！', 'info');
+			}else{
+				$.messager.alert('提示信息', '连接失败，请检查服务器及参数！', 'warning');
+			}
+			_stop();
+		  },
+		  error : function(xhr) {
+			$.messager.alert('提示信息', '连接失败，请检查服务器及参数！', 'warning');
+			_stop();
+		  }
+	});
+}
+
+//save配置文件
+function save(){
+	_loading();
+	var transferes = '';
+	var	nosql = '';
+	var tfids = [];
+	var nosqlids = [];
+	
+	var isValid = $("#confform").form('validate');
+	if(!isValid){
+		_stop();
+		return;
+	}
+	var ids = [];
+	$('input[name="ids"]:checked').each(function() {
+		ids.push($(this).attr("id"));
+	});
+	systypes = ids.join(",");
+	var arr = systypes.split(',');
+	for(var i=0;i<arr.length;i++){
+		if(arr[i] == 'Network'){
+			nosqlids.push(arr[i]);
+		}else{
+			tfids.push(arr[i]);
+		}
+	}
+	transferes = tfids.join(',');
+	nosql = nosqlids.join(',');
+	
+	var f_password = $("#f_password").val();
+	var t_password = $("#t_password").val();
+	if(f_password!=''){
+		f_password = encode64(f_password);
+	}
+	if(t_password!=''){
+		t_password = encode64(t_password);
+	}
+	
+	var url = "/index/edit";
+	var params = {
+		F_ip:$("#f_ip").val(),
+		F_port:$("#f_port").val(),
+		F_username:$("#f_username").val(),
+		F_password:f_password,
+		
+		T_ip:$("#t_ip").val(),
+		T_port:$("#t_port").val(),
+		T_username:$("#t_username").val(),
+		T_password:t_password,
+		Systype:systypes,
+		Dirname:dirname,
+		Transferes:transferes,
+		Nosql:nosql
+	};
+	try{
+	     json=JSON.stringify(params);
+	  }catch(e){
+		alert(e)
+       json="{}";
+	}
+	$.messager.confirm('确定', '您确定要保存当前配置信息吗？', function(r) {
+		if (r) {
+			$.ajax( {
+				  type : 'POST',
+				  url : url,
+				  data : {"json":json},
+				  dataType : 'text',
+				  success : function(data) {
+					var data = JSON.parse(data);
+					$.messager.alert('提示信息', '保存成功！请从管理端运维管理中心重启服务。', 'info');
+					_stop();
+				  },
+				  error : function(xhr) {
+					_stop();
+				  }
+			});
+		}
+	});	
+	_stop();
+}
+
+//遮罩
+function _loading() {
+	var doc = document;
+	var h = doc.body.clientHeight;
+	var divh = doc.getElementById("maindiv").offsetHeight;
+	$("<div class=\"datagrid-mask\" style=\"display:block;z-index:99999\"></div>").css({
+		display : "block",
+		width : "100%",
+		height : "100%"
+	}).appendTo("body");
+	$("<div class=\"datagrid-mask-msg\" style=\"display:block;z-index:99999\"></div>").html("正在处理,请稍候...").appendTo("body").css({
+		display : "block",
+		left : ($(doc.body).outerWidth(true) - 190) / 2,
+		top : 300
+	});
+}
+
+//取消
+function _stop() {
+	$('.datagrid-mask-msg').remove();
+	$('.datagrid-mask').remove();
+}
+
+
+</script>
+</body>
+</html>

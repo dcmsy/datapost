@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+    <log filename='netcheck_notcheck' remark='用户未自查主机' runmodel='singletimer' >
+        <CheckColumnSQL></CheckColumnSQL>
+		<AlterSQL></AlterSQL>
+		<UpdateFlagSQL></UpdateFlagSQL>
+		<CheckRowSQL></CheckRowSQL>
+		<UpdateOperSQL>update tb_netcheck_notcheck set oper_flag='d' where sub_sysid='0101' and year_month_info=DATE_FORMAT(now() ,'%Y-%m')</UpdateOperSQL>
+		<DeleteByIDSQL>delete from tb_netcheck_notcheck where logicid=?</DeleteByIDSQL>	
+		<DataSQL>
+select
+(year_month_info+ '#'+ unitname+ '#'+deptname+ '#'+hostid+ '#'+hostname+ '#'+username+ '#'+mac+ '#'+ip+ '#'+hdid)as logicid,
+year_info,month_info,year_month_info,unitname,deptname,hostid,hostname,username,mac,ip,hdid,impdate
+from 
+(
+select distinct year(getdate())as year_info, 
+		month(getdate())as month_info, 
+		LEFT(CONVERT(varchar,GETDATE(),120),7) as year_month_info,
+		REPLACE(d.name,'_','|') as unitname,
+		REPLACE(c.fullname,'_','|') as deptname,
+		b.name as username, 
+		s.mechname as hostname, 
+		s.mac as mac, 
+		s.ip as ip, 
+		s.hdmodel + '|'+ s.hdSerial as hdid, 
+		'' as mboard, 
+		s.sid as hostid,
+		CONVERT(varchar,GETDATE(),120) as impdate
+		FROM chkproof.dbo.chkproof_sysinfo s
+		inner join chkproof.dbo.chkproof_bjcr b on s.bjcrid=b.uid 
+		inner join chkproof.dbo.chkproof_chushi c on b.chushi_id=c.uid 
+		inner join chkproof.dbo.chkproof_danwei d on c.danwei_id=d.uid 
+		left join chkproof_data.dbo.chkproof_f_jibenxinxi j on j.hid=s.sid 
+		WHERE s.status in (2,3) and s.sid in( 
+		select sid from chkproof.dbo.chkproof_sysinfo
+		 except
+		select distinct 
+		s.sid 
+		from chkproof_stattask sta 
+		inner join chkproof_stattask_report rpt on rpt.stid=sta.id 
+		inner join chkproof_sysinfo s  on s.sid = rpt.sid
+		where cast(LEFT(sta.basetime,4) as int)=year(getdate()) 
+		and cast(RIGHT(sta.basetime,2) as int)=month(getdate()))
+		and c.name is not null and c.name !='' and c.name !='N/A'
+)a	
+        </DataSQL>
+		<InsertSQL>insert into tb_netcheck_notcheck(logicid,year_info,month_info,year_month_info,unitname,deptname,hostid,hostname,username,mac,ip,hdid,impdate,sub_sysid,sub_sysname)values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)</InsertSQL>
+   	    <SuccessSQL></SuccessSQL>
+ 	</log>

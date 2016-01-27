@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+    <log filename='ga_media_info' remark='介质基本信息' runmodel='singletimer' isvaldata='true' >
+        <CheckColumnSQL></CheckColumnSQL>
+		<AlterSQL></AlterSQL>
+		<UpdateFlagSQL></UpdateFlagSQL>
+		<CheckRowSQL></CheckRowSQL>
+		<UpdateOperSQL>update tb_ga_media_info set oper_flag='d' where sub_sysid='0601'</UpdateOperSQL>
+		<DeleteByIDSQL>delete from tb_ga_media_info where id=?</DeleteByIDSQL>
+		<DataSQL>
+         select
+			id,year_info,month_info,year_month_info,sn,typename,statename,username,deptname,volume,factoryname,unitname,orgcode,remark,regdate,unregdate,impdate
+		from
+		(
+		select 	d.id,
+			DATE_FORMAT((case IFNULL(d.reg_date,'0000-00-00') when  '' then '0000-00-00' else IFNULL(d.reg_date,'0000-00-00') end),'%Y') as year_info,
+			DATE_FORMAT((case IFNULL(d.reg_date,'0000-00-00') when  '' then '0000-00-00' else IFNULL(d.reg_date,'0000-00-00') end),'%m') as month_info,
+			DATE_FORMAT((case IFNULL(d.reg_date,'0000-00-00') when  '' then '0000-00-00' else IFNULL(d.reg_date,'0000-00-00') end),'%Y-%m') as year_month_info,
+			d.sn,
+			(case d.type when 1 then '双向交换盘' when 3 then '单向导入盘' when 5 then '内网专用盘' end) as typename,
+			(case d.state when 1 then '已注册' when 2 then '已注销'  end) as statename,
+			d.user_name as username,
+			(case d.dept_name when  null then '未知' when '' then '未知' else d.dept_name end) as deptname,
+			d.volume,
+			d.factory_name as factoryname,
+			d.company_name as unitname,
+			d.org_code as orgcode,
+			d.remark,
+			(case IFNULL(d.reg_date,'0000-00-00') when  '' then '0000-00-00' else IFNULL(d.reg_date,'0000-00-00') end)as regdate,
+			(case IFNULL(d.unreg_date,'0000-00-00') when  '' then '0000-00-00' else IFNULL(d.unreg_date,'0000-00-00') end)  as unregdate,
+			now() as impdate
+			from
+			tb_gab_mediainfo d
+			where 1=1
+		)a
+        </DataSQL>
+		<InsertSQL>insert into tb_ga_media_info (id,year_info,month_info,year_month_info,sn,typename,statename,username,deptname,volume,factoryname,unitname,orgcode,remark,regdate,unregdate,impdate, sub_sysid,sub_sysname)values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)</InsertSQL>
+   	    <SuccessSQL></SuccessSQL>
+ 	</log>

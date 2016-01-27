@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+    <log filename='host_violation' remark='使用禁止设备违规日志' runmodel='repeatetimer' isvaldata='false' >
+        <CheckColumnSQL>select name from syscolumns where id=object_id('T_DeviceViolateLog') and name='isreported'</CheckColumnSQL>
+		<AlterSQL>alter table T_DeviceViolateLog  add isreported int default 0</AlterSQL>
+		<UpdateFlagSQL>update T_DeviceViolateLog set isreported=0 where isreported is null</UpdateFlagSQL>
+		<CheckRowSQL>
+			<![CDATA[ 
+				select rows as rowcnt
+					from sysindexes i
+					inner join sysobjects o
+					on (o.id = i.id and o.xtype='U')
+					where indid <2 and OBJECT_NAME(i.id)='T_DeviceViolateLog'
+				]]>
+		</CheckRowSQL>
+		<UpdateOperSQL></UpdateOperSQL>
+		<DeleteByIDSQL></DeleteByIDSQL>
+		<DataSQL>
+			<![CDATA[ 
+                 select 
+					id,year_info,month_info,year_month_info,audittypename,audittype,hostname,hostip,mac,hdid,username,deptname,recorddate,impdate 
+				 from (
+					select 
+					CONVERT(varchar(100),a.guid) as id,
+					year(a.violatetime)AS year_info, 
+					month(a.violatetime)AS month_info, 
+					LEFT(CONVERT(varchar,a.violatetime,120),7) AS year_month_info,
+					'使用禁止设备' as audittypename,
+					'12' as audittype,
+					c.hostname as hostname,
+					c.hostip ,
+					c.macaddress as mac,
+					c.harddiskinfo as hdid,
+					c.empname as username,
+					c.fullname as deptname,
+					CONVERT(varchar,a.violatetime,120) as recorddate,
+					CONVERT(varchar,GETDATE(),120) as impdate
+					from T_DeviceViolateLog a
+					inner join T_Equipment b on a.deviceid=b.equid
+					inner join V_HostInfo
+					c on a.hostcode=c.hostcode
+					where a.isreported=0	
+				)a
+			]]>
+        </DataSQL>
+		<InsertSQL>insert into tb_hostaudit_illegal(id,year_info,month_info,year_month_info,audittypename,audittype,hostname,hostip,mac,hdid,username,deptname,recorddate,impdate,sub_sysid,sub_sysname)values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)</InsertSQL>
+   	    <SuccessSQL>update T_DeviceViolateLog  set isreported=1 where guid in(@[id]) and isreported=0</SuccessSQL>
+ 	</log>

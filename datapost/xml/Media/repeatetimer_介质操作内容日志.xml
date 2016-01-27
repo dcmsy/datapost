@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+    <log filename='media_log_files' remark='介质动作明细日志' runmodel='repeatetimer' isvaldata='false' >
+        <CheckColumnSQL>select COLUMN_NAME from information_schema.COLUMNS where TABLE_SCHEMA='@[dbname]' and TABLE_NAME='tb_log_media_content' and COLUMN_NAME='isreported'</CheckColumnSQL>
+		<AlterSQL>alter table tb_log_media_content  add IsReported int default 0</AlterSQL>
+		<UpdateFlagSQL>update tb_log_media_content set IsReported=0 where IsReported is null</UpdateFlagSQL>
+		<CheckRowSQL>select TABLE_ROWS from information_schema.TABLES  where TABLE_SCHEMA='@[dbname]' and TABLE_NAME='tb_log_media_content'</CheckRowSQL>
+		<UpdateOperSQL></UpdateOperSQL>
+		<DeleteByIDSQL></DeleteByIDSQL>
+		<DataSQL>
+		select 
+		c.id,
+		'0' as year_info,
+		'0' as month_info,
+		'0' as year_month_info,
+		c.log_link_to as actionid,
+	
+		c.src_path as srcPath,
+		c.dest_path as destPath,
+		c.log_type as actiontype,
+		(case log_type 
+			when 1 then '创建文件' 
+			when 2 then '移动文件' 
+			when 3 then '复制文件' 
+			when 4 then '删除文件' 
+			when 5 then '创建目录' 
+			when 6 then '删除目录' 
+			when 7 then '重命名文件' 
+			when 8 then '格式化' end) as actiontypename,
+			'6' as loglevel,
+	
+			'信息' as loglevelname,
+			 (case IFNULL(c.log_time,'0000-00-00') when  '' then '0000-00-00' else IFNULL(c.log_time,'0000-00-00') end) as createdate,
+			a.muser_name as username,
+			a.mdept_name as deptname,
+			now() as impdate
+	
+			from tb_log_media_content c
+		 left join tb_log_media_action a on a.id = c.log_link_to
+		 where c.isreported=0 limit 10000
+        </DataSQL>
+		<InsertSQL>insert into tb_media_files(id,year_info,month_info,year_month_info,actionid,srcPath,destPath,actionType,actiontypename,loglevel,loglevelname,createdate,username,deptname,impdate,sub_sysid,sub_sysname)values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)</InsertSQL>
+   	    <SuccessSQL>update tb_log_media_content set IsReported=1 where id in (@[id]) </SuccessSQL>
+ 	</log>

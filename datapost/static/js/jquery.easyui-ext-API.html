@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <title>web.html</title>
+  <meta name="generator" content="Haroopad 0.12.2" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <style>div.oembedall-githubrepos{border:1px solid #DDD;border-radius:4px;list-style-type:none;margin:0 0 10px;padding:8px 10px 0;font:13.34px/1.4 helvetica,arial,freesans,clean,sans-serif;width:452px;background-color:#fff}div.oembedall-githubrepos .oembedall-body{background:-moz-linear-gradient(center top,#FAFAFA,#EFEFEF) repeat scroll 0 0 transparent;background:-webkit-gradient(linear,left top,left bottom,from(#FAFAFA),to(#EFEFEF));border-bottom-left-radius:4px;border-bottom-right-radius:4px;border-top:1px solid #EEE;margin-left:-10px;margin-top:8px;padding:5px 10px;width:100%}div.oembedall-githubrepos h3{font-size:14px;margin:0;padding-left:18px;white-space:nowrap}div.oembedall-githubrepos p.oembedall-description{color:#444;font-size:12px;margin:0 0 3px}div.oembedall-githubrepos p.oembedall-updated-at{color:#888;font-size:11px;margin:0}div.oembedall-githubrepos ul.oembedall-repo-stats{border:medium none;float:right;font-size:11px;font-weight:700;padding-left:15px;position:relative;z-index:5;margin:0}div.oembedall-githubrepos ul.oembedall-repo-stats li{border:medium none;color:#666;display:inline-block;list-style-type:none;margin:0!important}div.oembedall-githubrepos ul.oembedall-repo-stats li a{background-color:transparent;border:medium none;color:#666!important;background-position:5px -2px;background-repeat:no-repeat;border-left:1px solid #DDD;display:inline-block;height:21px;line-height:21px;padding:0 5px 0 23px}div.oembedall-githubrepos ul.oembedall-repo-stats li:first-child a{border-left:medium none;margin-right:-3px}div.oembedall-githubrepos ul.oembedall-repo-stats li a:hover{background:none no-repeat scroll 5px -27px #4183C4;color:#FFF!important;text-decoration:none}div.oembedall-githubrepos ul.oembedall-repo-stats li:first-child a:hover{border-bottom-left-radius:3px;border-top-left-radius:3px}ul.oembedall-repo-stats li:last-child a:hover{border-bottom-right-radius:3px;border-top-right-radius:3px}span.oembedall-closehide{background-color:#aaa;border-radius:2px;cursor:pointer;margin-right:3px}div.oembedall-container{margin-top:5px;text-align:left}.oembedall-ljuser{font-weight:700}.oembedall-ljuser img{vertical-align:bottom;border:0;padding-right:1px}.oembedall-stoqembed{border-bottom:1px dotted #999;float:left;overflow:hidden;width:730px;line-height:1;background:none repeat scroll 0 0 #FFF;color:#000;font-family:Arial,Liberation Sans,DejaVu Sans,sans-serif;font-size:80%;text-align:left;margin:0;padding:0}.oembedall-stoqembed a{color:#07C;text-decoration:none;margin:0;padding:0}.oembedall-stoqembed a:hover{text-decoration:underline}.oembedall-stoqembed a:visited{color:#4A6B82}.oembedall-stoqembed h3{font-family:Trebuchet MS,Liberation Sans,DejaVu Sans,sans-serif;font-size:130%;font-weight:700;margin:0;padding:0}.oembedall-stoqembed .oembedall-reputation-score{color:#444;font-size:120%;font-weight:700;margin-right:2px}.oembedall-stoqembed .oembedall-user-info{height:35px;width:185px}.oembedall-stoqembed .oembedall-user-info .oembedall-user-gravatar32{float:left;height:32px;width:32px}.oembedall-stoqembed .oembedall-user-info .oembedall-user-details{float:left;margin-left:5px;overflow:hidden;white-space:nowrap;width:145px}.oembedall-stoqembed .oembedall-question-hyperlink{font-weight:700}.oembedall-stoqembed .oembedall-stats{background:none repeat scroll 0 0 #EEE;margin:0 0 0 7px;padding:4px 7px 6px;width:58px}.oembedall-stoqembed .oembedall-statscontainer{float:left;margin-right:8px;width:86px}.oembedall-stoqembed .oembedall-votes{color:#555;padding:0 0 7px;text-align:center}.oembedall-stoqembed .oembedall-vote-count-post{font-size:240%;color:#808185;display:block;font-weight:700}.oembedall-stoqembed .oembedall-views{color:#999;padding-top:4px;text-align:center}.oembedall-stoqembed .oembedall-status{margin-top:-3px;padding:4px 0;text-align:center;background:none repeat scroll 0 0 #75845C;color:#FFF}.oembedall-stoqembed .oembedall-status strong{color:#FFF;display:block;font-size:140%}.oembedall-stoqembed .oembedall-summary{float:left;width:635px}.oembedall-stoqembed .oembedall-excerpt{line-height:1.2;margin:0;padding:0 0 5px}.oembedall-stoqembed .oembedall-tags{float:left;line-height:18px}.oembedall-stoqembed .oembedall-tags a:hover{text-decoration:none}.oembedall-stoqembed .oembedall-post-tag{background-color:#E0EAF1;border-bottom:1px solid #3E6D8E;border-right:1px solid #7F9FB6;color:#3E6D8E;font-size:90%;line-height:2.4;margin:2px 2px 2px 0;padding:3px 4px;text-decoration:none;white-space:nowrap}.oembedall-stoqembed .oembedall-post-tag:hover{background-color:#3E6D8E;border-bottom:1px solid #37607D;border-right:1px solid #37607D;color:#E0EAF1}.oembedall-stoqembed .oembedall-fr{float:right}.oembedall-stoqembed .oembedall-statsarrow{background-image:url(http://cdn.sstatic.net/stackoverflow/img/sprites.png?v=3);background-repeat:no-repeat;overflow:hidden;background-position:0 -435px;float:right;height:13px;margin-top:12px;width:7px}.oembedall-facebook1{border:#1A3C6C solid 1px;padding:0;font:13.34px/1.4 verdana;width:500px}.oembedall-facebook2{background-color:#627add}.oembedall-facebook2 a{color:#e8e8e8;text-decoration:none}.oembedall-facebookBody{background-color:#fff;vertical-align:top;padding:5px}.oembedall-facebookBody .contents{display:inline-block;width:100%}.oembedall-facebookBody div img{float:left;margin-right:5px}div.oembedall-lanyard{-webkit-box-shadow:none;-webkit-transition-delay:0s;-webkit-transition-duration:.4000000059604645s;-webkit-transition-property:width;-webkit-transition-timing-function:cubic-bezier(0.42,0,.58,1);background-attachment:scroll;background-clip:border-box;background-color:transparent;background-image:none;background-origin:padding-box;border-bottom-width:0;border-left-width:0;border-right-width:0;border-top-width:0;box-shadow:none;color:#112644;display:block;float:left;font-family:'Trebuchet MS',Trebuchet,sans-serif;font-size:16px;height:253px;line-height:19px;margin-bottom:0;margin-left:0;margin-right:0;margin-top:0;max-width:none;min-height:0;outline-color:#112644;outline-style:none;outline-width:0;overflow-x:visible;overflow-y:visible;padding-bottom:0;padding-left:0;padding-right:0;padding-top:0;position:relative;text-align:left;vertical-align:baseline;width:804px}div.oembedall-lanyard .tagline{font-size:1.5em}div.oembedall-lanyard .wrapper{overflow:hidden;clear:both}div.oembedall-lanyard .split{float:left;display:inline}div.oembedall-lanyard .prominent-place .flag:active,div.oembedall-lanyard .prominent-place .flag:focus,div.oembedall-lanyard .prominent-place .flag:hover,div.oembedall-lanyard .prominent-place .flag:link,div.oembedall-lanyard .prominent-place .flag:visited{float:left;display:block;width:48px;height:48px;position:relative;top:-5px;margin-right:10px}div.oembedall-lanyard .place-context{font-size:.889em}div.oembedall-lanyard .prominent-place .sub-place{display:block}div.oembedall-lanyard .prominent-place{font-size:1.125em;line-height:1.1em;font-weight:400}div.oembedall-lanyard .main-date{color:#8CB4E0;font-weight:700;line-height:1.1}div.oembedall-lanyard .first{width:48.57%;margin:0 0 0 2.857%}html{height:100%}body{padding:5px 20px 26px!important;background-color:#fff;overflow-x:hidden;overflow-y:auto}br,h1,h2,h3,h4,h5,h6{clear:both}hr.page{background:transparent url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAYAAAAECAYAAACtBE5DAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyJpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8xMi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNSBNYWNpbnRvc2giIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6OENDRjNBN0E2NTZBMTFFMEI3QjRBODM4NzJDMjlGNDgiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6OENDRjNBN0I2NTZBMTFFMEI3QjRBODM4NzJDMjlGNDgiPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDo4Q0NGM0E3ODY1NkExMUUwQjdCNEE4Mzg3MkMyOUY0OCIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDo4Q0NGM0E3OTY1NkExMUUwQjdCNEE4Mzg3MkMyOUY0OCIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/PqqezsUAAAAfSURBVHjaYmRABcYwBiM2QSA4y4hNEKYDQxAEAAIMAHNGAzhkPOlYAAAAAElFTkSuQmCC) repeat-x 0 0;border:0 none;color:#ccc;height:3px;padding:0}hr.underscore{border:0 none!important;height:30px;padding:0;-webkit-margin-before:0;-webkit-margin-after:0}body >:first-child{margin-top:0!important}img.plugin{box-shadow:0 1px 3px rgba(0,0,0,.1);border-radius:3px}iframe{border:0}figure{-webkit-margin-before:0;-webkit-margin-after:0;-webkit-margin-start:0;-webkit-margin-end:0}kbd{border:1px solid #aaa;-moz-border-radius:2px;-webkit-border-radius:2px;border-radius:2px;-moz-box-shadow:1px 2px 2px #ddd;-webkit-box-shadow:1px 2px 2px #ddd;box-shadow:1px 2px 2px #ddd;background-color:#f9f9f9;background-image:-moz-linear-gradient(top,#eee,#f9f9f9,#eee);background-image:-o-linear-gradient(top,#eee,#f9f9f9,#eee);background-image:-webkit-linear-gradient(top,#eee,#f9f9f9,#eee);background-image:linear-gradient(top,#eee,#f9f9f9,#eee);padding:1px 3px;font-family:inherit;font-size:.85em}.oembeded .oembed_photo{display:inline-block}img[data-echo]{margin:25px 0;width:100px;height:100px;background:#fff url(../img/ajax.gif) no-repeat center center}.spinner{display:inline-block;width:10px;height:10px;margin-bottom:-.1em;border:2px solid rgba(0,0,0,.5);border-top-color:transparent;border-radius:100%;-webkit-animation:spin 1s infinite linear;animation:spin 1s infinite linear}.spinner:after{content:'';display:block;width:0;height:0;position:absolute;top:-6px;left:0;border:4px solid transparent;border-bottom-color:rgba(0,0,0,.5);-webkit-transform:rotate(45deg);transform:rotate(45deg)}@-webkit-keyframes spin{to{-webkit-transform:rotate(360deg)}}@keyframes spin{to{transform:rotate(360deg)}}p.toc{margin:0!important}p.toc ul{padding-left:10px}p.toc>ul{padding:10px;margin:0 10px;display:inline-block;border:1px solid #ededed;border-radius:5px}p.toc li,p.toc ul{list-style-type:none}p.toc li{width:100%;padding:0;overflow:hidden}p.toc li a::after{content:"."}p.toc li a:before{content:"• "}p.toc h5{text-transform:uppercase}p.toc .title{float:left;padding-right:3px}p.toc .number{margin:0;float:right;padding-left:3px;background:#fff;display:none}.markdown{padding:20px}.markdown a{text-decoration:none;vertical-align:baseline}.markdown a:hover{text-decoration:underline}.markdown h1{font-size:2.2em;font-weight:700;margin:1.5em 0 1em}.markdown h2{font-size:1.8em;font-weight:700;margin:1.275em 0 .85em}.markdown h3{font-size:1.6em;font-weight:700;margin:1.125em 0 .75em}.markdown h4{font-size:1.4em;font-weight:700;margin:.99em 0 .66em}.markdown h5{font-size:1.2em;font-weight:700;margin:.855em 0 .57em}.markdown h6{font-size:1em;font-weight:700;margin:.75em 0 .5em}.markdown h1+p,.markdown h1:first-child,.markdown h2+p,.markdown h2:first-child,.markdown h3+p,.markdown h3:first-child,.markdown h4+p,.markdown h4:first-child,.markdown h5+p,.markdown h5:first-child,.markdown h6+p,.markdown h6:first-child{margin-top:0}.markdown hr{border:1px solid #ccc}.markdown p{margin:1em 0;word-wrap:break-word}.markdown ol{list-style-type:decimal}.markdown li{display:list-item;line-height:1.4em}.markdown blockquote{margin:1em 20px}.markdown blockquote>:first-child{margin-top:0}.markdown blockquote>:last-child{margin-bottom:0}.markdown blockquote cite:before{content:'\2014 \00A0'}.markdown .code{border-radius:3px;word-break:break-all;word-wrap:break-word}.markdown pre{border-radius:3px;word-break:break-all;word-wrap:break-word;overflow:auto}.markdown pre code{display:block}.markdown pre>code{border:1px solid #ccc;white-space:pre;padding:.5em;margin:0}.markdown code{border-radius:3px;word-break:break-all;word-wrap:break-word;border:1px solid #ccc;padding:0 5px;margin:0 2px}.markdown img{max-width:100%}.markdown table{padding:0;border-collapse:collapse;border-spacing:0}.markdown table tr td,.markdown table tr th{border:1px solid #ccc;margin:0;padding:6px 13px}.markdown table tr th{font-weight:700}.markdown table tr th>:first-child{margin-top:0}.markdown table tr th>:last-child{margin-bottom:0}.markdown table tr td>:first-child{margin-top:0}.markdown table tr td>:last-child{margin-bottom:0}.markdown em.underline{font-style:normal;text-decoration:underline}.markdown strong.highlight{color:#000;padding:0 5px;background-color:#fdffb6;-webkit-box-shadow:#fdffb6 0 0 5px;-moz-box-shadow:#fdffb6 0 0 5px;box-shadow:#fdffb6 0 0 5px}.github{padding:20px;color:#000;font-size:15px;font-family:"Lucida Grande","Lucida Sans Unicode","Lucida Sans",AppleSDGothicNeo-Medium,'Segoe UI','Malgun Gothic',Verdana,Tahoma,sans-serif;background:#fff;-webkit-font-smoothing:antialiased}.github a{color:#3269a0}.github a:hover{color:#4183c4}.github h2{border-bottom:1px solid #e6e6e6;line-height:1.7em}.github h6{color:#777}.github hr{border:1px solid #e6e6e6}.github pre>code{font-size:.9em;font-family:Consolas,Inconsolata,Courier,monospace}.github blockquote{border-left:4px solid #e6e6e6;padding:0 15px;font-style:italic}.github table{background-color:#fafafa}.github table tr td,.github table tr th{border:1px solid #e6e6e6}.github table tr:nth-child(2n){background-color:#f2f2f2}.hljs{display:block;overflow-x:auto;padding:.5em;color:#333;background:#f8f8f8;-webkit-text-size-adjust:none}.diff .hljs-header,.hljs-comment,.hljs-javadoc,.hljs-template_comment{color:#998;font-style:italic}.css .rule .hljs-keyword,.hljs-keyword,.hljs-request,.hljs-status,.hljs-subst,.hljs-winutils,.javascript .hljs-title,.nginx .hljs-title{color:#333;font-weight:700}.hljs-hexcolor,.hljs-number,.ruby .hljs-constant{color:teal}.hljs-phpdoc,.hljs-string,.hljs-tag .hljs-value,.tex .hljs-formula{color:#d14}.coffeescript .hljs-params,.hljs-id,.hljs-title,.scss .hljs-preprocessor{color:#900;font-weight:700}.clojure .hljs-title,.hljs-subst,.javascript .hljs-title,.lisp .hljs-title{font-weight:400}.hljs-class .hljs-title,.hljs-type,.tex .hljs-command,.vhdl .hljs-literal{color:#458;font-weight:700}.django .hljs-tag .hljs-keyword,.hljs-rules .hljs-property,.hljs-tag,.hljs-tag .hljs-title{color:navy;font-weight:400}.hljs-attribute,.hljs-variable,.lisp .hljs-body{color:teal}.hljs-regexp{color:#009926}.hljs-prompt,.hljs-symbol,.lisp .hljs-keyword,.ruby .hljs-symbol .hljs-string,.tex .hljs-special{color:#990073}.clojure .hljs-built_in,.hljs-built_in,.lisp .hljs-title{color:#0086b3}.hljs-cdata,.hljs-doctype,.hljs-pi,.hljs-pragma,.hljs-preprocessor,.hljs-shebang{color:#999;font-weight:700}.hljs-deletion{background:#fdd}.hljs-addition{background:#dfd}.diff .hljs-change{background:#0086b3}.hljs-chunk{color:#aaa}.markdown html,body{font-family:"Microsoft YaHei","Meiryo UI","Malgun Gothic","Segoe UI","Trebuchet MS",Helvetica,sans-serif!important;max-width:960px!important;margin:0 auto!important;line-height:1.6;font-size:14px}.markdown body,pre>code{font-weight:400!important}footer{position:fixed;font-size:.8em;text-align:right;bottom:0;margin-left:-25px;height:20px;width:100%}</style>
+</head>
+<body class="markdown github">
+
+  <h2 id="web平台开发文档"><a name="web平台开发文档" href="#web平台开发文档"></a>web平台开发文档</h2><h3 id="**目录**"><a name="**目录**" href="#**目录**"></a><strong>目录</strong></h3><ul>
+<li><a href="#web">前端基础组件的使用</a>  <ul>
+<li><a href="#web1">资源文件的引入</a>  </li>
+<li><a href="#web2">创建grid表格</a>  </li>
+<li><a href="#web3">增加操作项toolbar</a></li>
+<li><a href="#web4">form表单</a></li>
+<li><a href="#web5">表单验证</a></li>
+<li><a href="#web6">弹框调用</a> </li>
+<li><a href="#web7">删除与批量删除</a></li>
+<li><a href="#web8">查询</a></li>
+<li><a href="#web9">其他接口(表格行特殊显示、高级查询)</a> </li>
+</ul>
+</li>
+</ul><hr class="section"><h3 id="web">前端基础组件的使用</h3><p><span id="web1"><strong>1. 资源文件的引入</strong>   </span></p><p>资源文件由平台同意提供resources资源包，子系统在使用时将相应的资源文件引入即可。依赖的公用资源文件脚本如下： </p><pre><code data-origin="&lt;pre&gt;&lt;code&gt;&amp;lt;link rel=&quot;stylesheet&quot; type=&quot;text/css&quot; href=&quot;${base}/resources/css/main.css&quot;&amp;gt;
+&amp;lt;link rel=&quot;stylesheet&quot; type=&quot;text/css&quot; href=&quot;${base}/resources/css/icons.css&quot;&amp;gt;
+&amp;lt;script type=&quot;text/javascript&quot; src=&quot;${base}/resources/js/jquery-1.7.2.min.js&quot;&amp;gt;&amp;lt;/script&amp;gt;
+&amp;lt;script type=&quot;text/javascript&quot; src=&quot;${base}/resources/js/jquery.easyui.min.js&quot;&amp;gt;&amp;lt;/script&amp;gt;
+&amp;lt;script type=&quot;text/javascript&quot; src=&quot;${base}/resources/js/jquery.easyui-ext.js&quot;&amp;gt;&amp;lt;/script&amp;gt;  
+&lt;/code&gt;&lt;/pre&gt;">&lt;link rel="stylesheet" type="text/css" href="${base}/resources/css/main.css"&gt;
+&lt;link rel="stylesheet" type="text/css" href="${base}/resources/css/icons.css"&gt;
+&lt;script type="text/javascript" src="${base}/resources/js/jquery-1.7.2.min.js"&gt;&lt;/script&gt;
+&lt;script type="text/javascript" src="${base}/resources/js/jquery.easyui.min.js"&gt;&lt;/script&gt;
+&lt;script type="text/javascript" src="${base}/resources/js/jquery.easyui-ext.js"&gt;&lt;/script&gt;  
+</code></pre><ul>
+<li><code>main.css</code> 主要样式文件，包含easyui样式定义，以及自定义样式  </li>
+<li><code>icons.css</code> 图标样式文件  </li>
+<li><code>jquery-1.7.2.min.js</code> jquery脚本文件  </li>
+<li><code>jquery.easyui.min.js</code> easyui脚本文件  </li>
+<li><code>jquery.easyui-ext.js</code> easyui自定义扩展文件  </li>
+</ul><blockquote>
+<p><strong>tips:</strong> </p>
+<ul>
+<li>以上脚本文件为公用的脚本文件，可以定义为一个layout宏（模板），避免了在每一个页面重复引用的麻烦，参考_common.html文件。<br>在页面中我们可以直接通过引入宏来引入依赖的资源文件了。使用方式（以Freemarker为示例）：<br><code>&lt;#include "/plugins/common/_common.html"/&gt;</code><br><code>&lt;@common&gt;your content&lt;/@common&gt;</code>   </li>
+<li>所有路径建议使用绝对路径方式，防止因为路径引发问题，如可在全局的config中配置new ContextPathHandler(“base”) 这样在页面中直接使用${base}/role/add方式引用即可。  </li>
+</ul>
+</blockquote><p><span id="web2"><strong>2. 创建grid表格</strong>  </span></p><p>grid表格为常用的展示数据信息表格，grid提供了方便易用的分页排序和拖动操作，开发者无需过多关心页面显示样式，把主要关注点放在数据渲染上。示例：</p><pre><code data-origin="&lt;pre&gt;&lt;code&gt;&amp;lt;table id=&quot;dg&quot; class=&quot;easyui-datagrid&quot; title=&quot;角色列表&quot;
+    data-options=&quot;url:'${base}/role/data_render',toolbar:'#tb'&quot;&amp;gt;
+    &amp;lt;thead&amp;gt;
+        &amp;lt;tr&amp;gt;
+            &amp;lt;th data-options=&quot;checkbox:true&quot;&amp;gt;&amp;lt;/th&amp;gt;
+            &amp;lt;th data-options=&quot;field:'name',width:80,sortable:true&quot;&amp;gt;
+                角色名
+            &amp;lt;/th&amp;gt;
+            &amp;lt;th data-options=&quot;field:'create_date',width:80,sortable:true&quot;&amp;gt;
+                创建时间
+            &amp;lt;/th&amp;gt;
+            &amp;lt;th data-options=&quot;field:'remark',width:100&quot;&amp;gt;
+                备注
+            &amp;lt;/th&amp;gt;
+            &amp;lt;th data-options=&quot;field:'id',align:'center',width:100,formatter:op&quot;&amp;gt;
+                操作
+            &amp;lt;/th&amp;gt;
+        &amp;lt;/tr&amp;gt;
+    &amp;lt;/thead&amp;gt;
+&amp;lt;/table&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;">&lt;table id="dg" class="easyui-datagrid" title="角色列表"
+    data-options="url:'${base}/role/data_render',toolbar:'#tb'"&gt;
+    &lt;thead&gt;
+        &lt;tr&gt;
+            &lt;th data-options="checkbox:true"&gt;&lt;/th&gt;
+            &lt;th data-options="field:'name',width:80,sortable:true"&gt;
+                角色名
+            &lt;/th&gt;
+            &lt;th data-options="field:'create_date',width:80,sortable:true"&gt;
+                创建时间
+            &lt;/th&gt;
+            &lt;th data-options="field:'remark',width:100"&gt;
+                备注
+            &lt;/th&gt;
+            &lt;th data-options="field:'id',align:'center',width:100,formatter:op"&gt;
+                操作
+            &lt;/th&gt;
+        &lt;/tr&gt;
+    &lt;/thead&gt;
+&lt;/table&gt;
+</code></pre><p>以上是一个普通的table表格，需要我们定义好显示的头th（列名），在每个列中通过<code>field</code>指明对应的数据字段名称（和数据库字段名对应），如果想要支持easyui提供的效果，需要指明<code>class="easyui-datagrid"</code>(必须)，然后我们需要配置一个url，来请求后台的数据来对表格信息进行渲染，可以直接在table中使用<code>url="/role/data"</code> ,也可以在<code>data-options</code>中配置（如上）。这样一个数据表格就显示出来了。<em>更多api，参考easyui文档表格部分。</em>  </p><p><span id="web3"><strong>3. 增加操作项toolbar</strong>  </span></p><p>每个列表上经常会带有一些操作按钮以及查询条件，也就是toolbar，给列表添加一个toolbar也很简单，只需要在table上面定义一个div,如下：</p><pre><code data-origin="&lt;pre&gt;&lt;code&gt;&amp;lt;div id=&quot;tb&quot;&amp;gt;
+    &amp;lt;div class=&quot;toolbar&quot;&amp;gt;
+        &amp;lt;a href=&quot;javascript:void(0)&quot; onclick=&quot;add()&quot; class=&quot;easyui-linkbutton&quot;
+            data-options=&quot;iconCls:'icon-plus',plain:true&quot;&amp;gt;添加角色&amp;lt;/a&amp;gt; |
+        &amp;lt;a href=&quot;javascript:void(0)&quot; onclick=&quot;deletes()&quot;
+            class=&quot;easyui-linkbutton&quot;
+            data-options=&quot;iconCls:'icon-cancel',plain:true&quot;&amp;gt;批量删除&amp;lt;/a&amp;gt; | 
+        角色名：
+        &amp;lt;input type=&quot;text&quot; value=&quot;&quot; id=&quot;name&quot; class=&quot;input-text&quot;
+            onkeydown=&quot;query()&quot; /&amp;gt;
+        &amp;lt;a href=&quot;javascript:void(0)&quot; class=&quot;easyui-linkbutton&quot; onclick=&quot;query()&quot;
+            data-options=&quot;iconCls:'icon-zoom'&quot;&amp;gt;查询&amp;lt;/a&amp;gt;
+    &amp;lt;/div&amp;gt;
+&amp;lt;/div&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;">&lt;div id="tb"&gt;
+    &lt;div class="toolbar"&gt;
+        &lt;a href="javascript:void(0)" onclick="add()" class="easyui-linkbutton"
+            data-options="iconCls:'icon-plus',plain:true"&gt;添加角色&lt;/a&gt; |
+        &lt;a href="javascript:void(0)" onclick="deletes()"
+            class="easyui-linkbutton"
+            data-options="iconCls:'icon-cancel',plain:true"&gt;批量删除&lt;/a&gt; | 
+        角色名：
+        &lt;input type="text" value="" id="name" class="input-text"
+            onkeydown="query()" /&gt;
+        &lt;a href="javascript:void(0)" class="easyui-linkbutton" onclick="query()"
+            data-options="iconCls:'icon-zoom'"&gt;查询&lt;/a&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+</code></pre><p>在table中需要关联我们创建的toolbar, table中的data-options中添加<code>toolbar:'#tb'</code>。这样一个带有toolbar的表格就完成了。多行toolbar，可以定义多个div形式，如<code>&lt;div class=”toolbar”&gt;&lt;/div&gt;&lt;div class=”toolbar”&gt;&lt;/div&gt;</code>。</p><p><span id="web4"><strong>4. form表单</strong>  </span></p><p>form表单为普通的表单格式，如下：  </p><pre><code data-origin="&lt;pre&gt;&lt;code&gt;&amp;lt;form id=&quot;ff&quot; class=&quot;form&quot; method=&quot;post&quot; action=&quot;${base}/account/save&quot;&amp;gt;
+    &amp;lt;div id=&quot;p&quot; class=&quot;easyui-panel&quot; title=&quot;账号添加&quot;
+        data-options=&quot;iconCls:'icon-plus'&quot;&amp;gt;
+        &amp;lt;table class=&quot;table_form&quot; width=&quot;100%&quot;&amp;gt;
+            &amp;lt;tr&amp;gt;
+                &amp;lt;td align=&quot;right&quot;&amp;gt;
+                    账号:
+                &amp;lt;/td&amp;gt;
+                &amp;lt;td&amp;gt;
+                    &amp;lt;input class=&quot;easyui-validatebox span3&quot; type=&quot;text&quot;
+                        name=&quot;account.nam value=&quot;&quot; /&amp;gt;
+                 &amp;lt;/td&amp;gt;                
+            &amp;lt;/tr&amp;gt;
+            &amp;lt;tr&amp;gt;
+                &amp;lt;td&amp;gt;&amp;lt;/td&amp;gt;
+                &amp;lt;td&amp;gt;
+                    &amp;lt;a href=&quot;javascript:void(0)&quot; onclick=&quot;add()&quot;
+                        class=&quot;easyui-linkbutton&quot;&amp;gt;保 存&amp;lt;/a&amp;gt;
+                    &amp;lt;a href=&quot;javascript:void(0)&quot; onclick=&quot;add_batch()&quot;
+                        class=&quot;easyui-linkbutton&quot;&amp;gt;保存并继续&amp;lt;/a&amp;gt;
+                    &amp;lt;a href=&quot;javascript:void(0)&quot; onclick=&quot;reback()&quot;
+                        class=&quot;easyui-linkbutton&quot;&amp;gt;取 消&amp;lt;/a&amp;gt;
+                &amp;lt;/td&amp;gt;
+            &amp;lt;/tr&amp;gt;
+        &amp;lt;/table&amp;gt;
+    &amp;lt;/div&amp;gt;
+&amp;lt;/form&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;">&lt;form id="ff" class="form" method="post" action="${base}/account/save"&gt;
+    &lt;div id="p" class="easyui-panel" title="账号添加"
+        data-options="iconCls:'icon-plus'"&gt;
+        &lt;table class="table_form" width="100%"&gt;
+            &lt;tr&gt;
+                &lt;td align="right"&gt;
+                    账号:
+                &lt;/td&gt;
+                &lt;td&gt;
+                    &lt;input class="easyui-validatebox span3" type="text"
+                        name="account.nam value="" /&gt;
+                 &lt;/td&gt;                
+            &lt;/tr&gt;
+            &lt;tr&gt;
+                &lt;td&gt;&lt;/td&gt;
+                &lt;td&gt;
+                    &lt;a href="javascript:void(0)" onclick="add()"
+                        class="easyui-linkbutton"&gt;保 存&lt;/a&gt;
+                    &lt;a href="javascript:void(0)" onclick="add_batch()"
+                        class="easyui-linkbutton"&gt;保存并继续&lt;/a&gt;
+                    &lt;a href="javascript:void(0)" onclick="reback()"
+                        class="easyui-linkbutton"&gt;取 消&lt;/a&gt;
+                &lt;/td&gt;
+            &lt;/tr&gt;
+        &lt;/table&gt;
+    &lt;/div&gt;
+&lt;/form&gt;
+</code></pre><p>需要指定<code>action</code>提交的url(也可以通过在form_submit(options)中指定<code>url:'${base}/account/save')</code>，提交方法默认使用<code>post</code> ,点击保存后调用方法<code>$.form_submit(options)</code>，returl为保存成功后转向的页面，如果没有指明该参数，保存后继续停留在当前页。  </p><p>接口： <code>$.form_submit(options)</code>  options为参数对象  </p><p>属性：<br>扩展自easyui <code>$.fn.form.defaults</code>，除了可以使用easyui的form参数外（参考easyui 表单部分），还增加了自定义参数<br><code>returl</code>：提交完成后转向的页面<br><code>form</code>：指定需要提交的表单（为防止一个页面有多个form冲突），默认提交当前页所有form   </p><p>实例方法，保存和保存并继续两个方法调用如下：  </p><pre><code data-origin="&lt;pre&gt;&lt;code&gt;    function add(){
+        $.form_submit({
+            returl:&quot;${base}/account&quot;,
+            form:&quot;#win&quot; //指定只提交id为win的form表单
+        });
+    }
+    function add_batch(){
+        $.form_submit();//无参数
+    }
+&lt;/code&gt;&lt;/pre&gt;">    function add(){
+        $.form_submit({
+            returl:"${base}/account",
+            form:"#win" //指定只提交id为win的form表单
+        });
+    }
+    function add_batch(){
+        $.form_submit();//无参数
+    }
+</code></pre><p><span id="web5"><strong>5. 表单验证</strong>   </span></p><p>表单验证需要在输入框中添加<code>class="easyui-validatebox"</code>这样input就具备了验证功能，在输入框中指定对应的验证方法就能实现相应的验证功能了。比如非空验证：  </p><pre><code data-origin="&lt;pre&gt;&lt;code&gt;&amp;lt;input class=&quot;easyui-validatebox&quot; type=&quot;text&quot;  data-options=&quot;required:true&quot; value=&quot;&quot; /&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;">&lt;input class="easyui-validatebox" type="text"  data-options="required:true" value="" /&gt;
+</code></pre><p>Easyui提供一些基础性的验证：</p><ul>
+<li>required 必须输入验证 true|false  </li>
+<li>email 邮箱格式验证 true|false  </li>
+<li>url url地址合法性验证 true|false  </li>
+<li>length 输入长度验证，一个范围 length[1,10]</li>
+</ul><p>扩展：  </p><ul>
+<li>remote 远程方法验证 remote[url,param,message]</li>
+<li>equalTo 两次输入一致性验证 equalTo[‘#password’] 此处为对应的选择器</li>
+<li>number 输入必须为数字</li>
+<li>safefilter 只允许汉字、英文字母、数字及下划线</li>
+<li>maxLength 最大长度不能超过 {0} 个字符 maxLength[10]</li>
+<li>minLength 最小长度不能少于 {0} 个字符 maxLength[1]</li>
+<li>words 只允许字母、数字及下划线</li>
+<li>pswfilter 密码必须同时包含大写字母、小写字母、数字、特殊字符（~、!、@、#、^、&amp;、*、_、-、+、=）</li>
+<li>filter 过滤特殊字符验证（%`~@&lt;&gt;）  </li>
+<li>ip ip地址合法性验证  </li>
+<li>regx 正则表达式验证 regx[regx,message]  </li>
+</ul><p>验证也可以采用组合验证方式，一个复杂些的组合验证例子：  </p><pre><code data-origin="&lt;pre&gt;&lt;code&gt;&amp;lt;input class=&quot;easyui-validatebox span3&quot; type=&quot;text&quot; name=&quot;role.name&quot; 
+data-options=&quot;required:true,validType:['remote[\'${base}/role/has_role\',\'name\',\'角色名已存在\']','safefilter','length[1,20]']&quot;
+value=&quot;${(role.name)!}&quot; /&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;">&lt;input class="easyui-validatebox span3" type="text" name="role.name" 
+data-options="required:true,validType:['remote[\'${base}/role/has_role\',\'name\',\'角色名已存在\']','safefilter','length[1,20]']"
+value="${(role.name)!}" /&gt;
+</code></pre><p><span id="web6"><strong>6. 弹框调用</strong>  </span></p><p>(1) 添加/编辑弹窗  </p><p>接口：<code>$.window(options)</code> options为属性对象<br>属性：<br>继承自easyui <code>$.fn.dialog.defaults</code>,相关属性可参考easyui的dialog部分，扩展属性：  </p><pre><code data-origin="&lt;pre&gt;&lt;code&gt; `title`:弹窗显示名称  
+ `href`:表单地址  
+ `returl`:表单提交完成后返回的url，不指定默认返回当前父页面  
+ `form`:指定弹框中需要提交的表单  
+ `hasbutton` 默认弹框按钮是否显示（为true时不显示按钮）      
+&lt;/code&gt;&lt;/pre&gt;"> `title`:弹窗显示名称  
+ `href`:表单地址  
+ `returl`:表单提交完成后返回的url，不指定默认返回当前父页面  
+ `form`:指定弹框中需要提交的表单  
+ `hasbutton` 默认弹框按钮是否显示（为true时不显示按钮）      
+</code></pre><p>使用方法：  </p><pre><code data-origin="&lt;pre&gt;&lt;code&gt;function add(){
+    $.window({
+    title:&quot;新建角色&quot;,
+    href:&quot;${base}/role/add&quot;
+    });
+} 
+&lt;/code&gt;&lt;/pre&gt;">function add(){
+    $.window({
+    title:"新建角色",
+    href:"${base}/role/add"
+    });
+} 
+</code></pre><p><code>$.window</code>接口会自动生成一个弹框，并且使用异步方式提交表单，返回相关处理信息。开发者无需关注提交动作，当然<strong>需要在form表单中指定action=”your url”提交地址</strong>，提交后返回一个{ret:”1”,errcode:”1”,msg:”添加用户失败”}json字符串格式，<code>$.window</code>根据json格式自动解析处理。 效果图：<br><img src="res/dialog.jpg" alt="">   </p><ul>
+<li>保存：关闭窗口，并且刷新列表页</li>
+<li>保存并继续：保存数据后清空页面，继续填写。  </li>
+</ul><p>注：如果不想使用默认提供的按钮，可以通过传递属性<code>button</code>自定义显示按钮和操作，参照easyui dialog部分。</p><p>(2) 数据选择弹窗  </p><p>接口：<code>$.showDialog(options)</code> 用于处理需要选择公用页面数据的情况，支持单条记录和多条记录的选择。<br>属性：<br><code>tilte</code>:弹窗显示名称<br><code>href</code>:公用页面地址<br><code>height</code>:弹框高度（非必需）<br><code>width</code>：弹框宽度(非必需)<br><code>handler</code>:回调函数  </p><p>使用方法：</p><pre><code data-origin="&lt;pre&gt;&lt;code&gt;function select_user(){
+    $.showDialog({
+    title:&quot;选择用户&quot;,
+    height:400,
+    width:600,
+    href:&quot;${base}/user/single&quot;,
+    handler:function(data){//data为选择表格行的数据
+            var textFiled = data.name;
+            var idFiled = data.id;
+            $(&quot;#user_name&quot;).val(textFiled);//赋值给对应文本框显示用
+            $(&quot;#user_id&quot;).val(idFiled);//赋值给隐藏域保存使用
+    }
+    });
+}
+&lt;/code&gt;&lt;/pre&gt;">function select_user(){
+    $.showDialog({
+    title:"选择用户",
+    height:400,
+    width:600,
+    href:"${base}/user/single",
+    handler:function(data){//data为选择表格行的数据
+            var textFiled = data.name;
+            var idFiled = data.id;
+            $("#user_name").val(textFiled);//赋值给对应文本框显示用
+            $("#user_id").val(idFiled);//赋值给隐藏域保存使用
+    }
+    });
+}
+</code></pre><p>效果图：<br><img src="res/select.jpg" alt="">   </p><p>注：<strong>为避免冲突，提供公共页面api者，需指定公共页面table的id为<code>common-grid</code></strong> </p><p><span id="web7"><strong>7. 删除与批量删除</strong>  </span></p><p>接口：<code>$.deletes(options)</code>  </p><p>属性： </p><pre><code data-origin="&lt;pre&gt;&lt;code&gt; title : 提示框标题
+ info : 提示信息
+ href : 请求地址
+ params : 参数
+ returl : 删除后返回地址
+ handler:删除后回调方法  
+ grid:执行操作的表格（解决多表格下冲突，单个表格下无需指定）
+&lt;/code&gt;&lt;/pre&gt;"> title : 提示框标题
+ info : 提示信息
+ href : 请求地址
+ params : 参数
+ returl : 删除后返回地址
+ handler:删除后回调方法  
+ grid:执行操作的表格（解决多表格下冲突，单个表格下无需指定）
+</code></pre><p>使用方法：</p><pre><code data-origin="&lt;pre&gt;&lt;code&gt;//批量删除
+function deletes(){
+    $.deletes({
+        href:&quot;${base}/role/delete?ids=&quot; //注：此处没有传递params，默认根据表格中的checkbox获取选择的数据
+    });
+}
+//单个删除
+function deleteById(value){
+    $.deletes({
+        href:&quot;${base}/role/delete&quot;,
+        params:&quot;id=&quot;+value //此处params也可不指定，直接附加到url后面
+    });
+}
+&lt;/code&gt;&lt;/pre&gt;">//批量删除
+function deletes(){
+    $.deletes({
+        href:"${base}/role/delete?ids=" //注：此处没有传递params，默认根据表格中的checkbox获取选择的数据
+    });
+}
+//单个删除
+function deleteById(value){
+    $.deletes({
+        href:"${base}/role/delete",
+        params:"id="+value //此处params也可不指定，直接附加到url后面
+    });
+}
+</code></pre><p><span id="web8"><strong>8. 查询</strong>  </span></p><p>接口：<code>$.query(options)</code><br>属性： <code>form</code> 定义的form表单名称<br>使用方法：</p><pre><code data-origin="&lt;pre&gt;&lt;code&gt;function query(){
+    var param = $.query({
+        form:'#search_form'
+    });
+    $(&quot;#dg&quot;).datagrid('load',param);
+}  
+&lt;/code&gt;&lt;/pre&gt;">function query(){
+    var param = $.query({
+        form:'#search_form'
+    });
+    $("#dg").datagrid('load',param);
+}  
+</code></pre><p>注：使用该方法需要把查询条件通过form表单包裹起来，参数值form指定的即为当前form表单的id。  </p><p>如果查询字段较少（1-2个），可以直接使用对应参数做查询，如：  </p><pre><code data-origin="&lt;pre&gt;&lt;code&gt;function query(){
+    $(&quot;#dg&quot;).datagrid('load',{
+        name:$(&quot;#name&quot;).val()
+    });
+}
+&lt;/code&gt;&lt;/pre&gt;">function query(){
+    $("#dg").datagrid('load',{
+        name:$("#name").val()
+    });
+}
+</code></pre><p><span id="web9"><strong>9. 其他接口</strong>  </span></p><ul>
+<li><p>表格显示操作按钮，在实际使用中经常会用到在表格列中指定操作按钮的情形，针对这种情形，可以在定义表格列时，使用<code>formatter</code>接口。</p>
+<pre><code data-origin="&lt;pre&gt;&lt;code&gt;  &amp;lt;th data-options=&quot;field:'id',align:'center',width:100,formatter:op&quot;&amp;gt;
+  操作
+  &amp;lt;/th&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;">  &lt;th data-options="field:'id',align:'center',width:100,formatter:op"&gt;
+  操作
+  &lt;/th&gt;
+</code></pre><p>formatter对应的为一个function(value,row)方法。value为当前行的id，row为行对象(参考easyui 表格部分)。比如在表格行我们添加上编辑和删除按钮，可以使用<code>linkbtn</code>接口。<br>linkbtn接口属性：<br><code>value</code>:当前行id<br><code>option</code>:操作项，为一个对象数组，里面包含多个操作项的配置<br>使用方法： </p>
+<pre><code data-origin="&lt;pre&gt;&lt;code&gt;  function op(value,row){
+  return linkbtn(value,{
+          option:[{
+              text:'编辑', //操作显示文字
+              icon:'icon-edit',//图标
+              onclick:'edit' //点击调用的方法，对应着方法function edit(id){}
+          },{
+              text:'删除',
+              icon:'icon-cancel',
+              onclick:'deleteById'
+          },{
+              text:'权限分配',
+              icon:'icon-calc',
+              onclick:'perms_distri'
+          }]
+      });
+  }
+&lt;/code&gt;&lt;/pre&gt;">  function op(value,row){
+  return linkbtn(value,{
+          option:[{
+              text:'编辑', //操作显示文字
+              icon:'icon-edit',//图标
+              onclick:'edit' //点击调用的方法，对应着方法function edit(id){}
+          },{
+              text:'删除',
+              icon:'icon-cancel',
+              onclick:'deleteById'
+          },{
+              text:'权限分配',
+              icon:'icon-calc',
+              onclick:'perms_distri'
+          }]
+      });
+  }
+</code></pre></li>
+</ul><p>效果：<br><img src="res/rows.jpg" alt=""></p><ul>
+<li>高级查询  </li>
+</ul><p>接口：<code>$.queryMore(options)</code><br>属性：<br><code>href</code>:查询form页面<br><code>height</code>:高度<br><code>width</code>:宽度<br><code>handler</code>：回调函数，返回值data为查询条件<br>使用方法：  </p><pre><code data-origin="&lt;pre&gt;&lt;code&gt;function query_more(){
+    $.queryMore({
+        href:'${base}/plugins/host/_query.html',
+        height:130,
+        handler:function(data){             
+             $(&quot;#dg&quot;).datagrid('load',data);//根据条件reload表格
+        }
+    });
+}
+&lt;/code&gt;&lt;/pre&gt;">function query_more(){
+    $.queryMore({
+        href:'${base}/plugins/host/_query.html',
+        height:130,
+        handler:function(data){             
+             $("#dg").datagrid('load',data);//根据条件reload表格
+        }
+    });
+}
+</code></pre><p>_query.html页面的input 需要指定<code>class="query"</code>否则无法获取查询条件   </p><ul>
+<li>tips提示  </li>
+</ul><p>在表格显示时经常会遇到内容太多，无法全部显示的情况，此时可通过tips提示方式提供有好的预览。<br>接口：<br><code>tooltip</code>  默认表格中超过10个字符的全部使用 ，可通过配置[‘字段名’]来指定特殊字段使用<br>使用方法：</p><pre><code data-origin="&lt;pre&gt;&lt;code&gt;$(function(){
+    $(&quot;#dg&quot;).datagrid({
+        onLoadSuccess:function(){
+            $(this).datagrid('tooltip',['log']);
+        }
+    });
+});
+&lt;/code&gt;&lt;/pre&gt;">$(function(){
+    $("#dg").datagrid({
+        onLoadSuccess:function(){
+            $(this).datagrid('tooltip',['log']);
+        }
+    });
+});
+</code></pre><p>效果：<br><img src="res/tooltip.jpg" alt="">  </p><ul>
+<li>datagrid指定列checkbox的处理</li>
+</ul><p>接口：<br><code>hideCheckbox</code> 隐藏指定列的checkbox<br><code>disabledCheckbox</code>禁用指定列的checkbox<br>用法：  </p><pre><code data-origin="&lt;pre&gt;&lt;code&gt;$(&quot;#grid&quot;).datagrid('hideCheckbox',index);//index为行标 
+&lt;/code&gt;&lt;/pre&gt;">$("#grid").datagrid('hideCheckbox',index);//index为行标 
+</code></pre><p>效果：  </p><p><img src="res/checkbox.jpg" alt=""></p><ul>
+<li>日期控件（new）  </li>
+</ul><p>该控件为扩展my97datapicker的控件，easyui默认日期控件体验不太友好。<br>接口：<code>$("#id").my97()</code><br>属性：参考my97属性<br>使用方法：  </p><pre><code data-origin="&lt;pre&gt;&lt;code&gt;1.class注册：                 
+&amp;lt;input id=&quot;beg_date&quot;  name=&quot;beg_date&quot; type=&quot;text&quot; class=&quot;easyui-my97&quot; 
+data-options=&quot;dateFmt:'yyyy-MM-dd'&quot;/&amp;gt;  
+
+2.js注册：  
+$('#dd').my97({});   
+&lt;/code&gt;&lt;/pre&gt;">1.class注册：                 
+&lt;input id="beg_date"  name="beg_date" type="text" class="easyui-my97" 
+data-options="dateFmt:'yyyy-MM-dd'"/&gt;  
+
+2.js注册：  
+$('#dd').my97({});   
+</code></pre><ul>
+<li>上传组件(new)  </li>
+</ul><p>上传组件依赖于第三方组件swfupload。因此在使用前需要引入相应的资源文件  </p><pre><code data-origin="&lt;pre&gt;&lt;code&gt;&amp;lt;script type=&quot;text/javascript&quot;
+    src=&quot;${base}/resources/plugins/swfupload/swfupload.js&quot;&amp;gt;&amp;lt;/script&amp;gt;
+&amp;lt;script type=&quot;text/javascript&quot;
+    src=&quot;${base}/resources/plugins/swfupload/handler.js&quot;&amp;gt;&amp;lt;/script&amp;gt;
+&amp;lt;script type=&quot;text/javascript&quot;
+    src=&quot;${base}/resources/plugins/swfupload/common.js&quot;&amp;gt;&amp;lt;/script&amp;gt;  
+&lt;/code&gt;&lt;/pre&gt;">&lt;script type="text/javascript"
+    src="${base}/resources/plugins/swfupload/swfupload.js"&gt;&lt;/script&gt;
+&lt;script type="text/javascript"
+    src="${base}/resources/plugins/swfupload/handler.js"&gt;&lt;/script&gt;
+&lt;script type="text/javascript"
+    src="${base}/resources/plugins/swfupload/common.js"&gt;&lt;/script&gt;  
+</code></pre><p>属性：  </p><pre><code data-origin="&lt;pre&gt;&lt;code&gt;url:上传后台地址  
+size:限定上传文件大小，默认200m  如：size:&quot;200M&quot;
+file_type：指定上传文件类型。如：&quot;*.exe;*.zip&quot;  
+file_upload_limit：限定上传文件个数，默认50  
+&lt;/code&gt;&lt;/pre&gt;">url:上传后台地址  
+size:限定上传文件大小，默认200m  如：size:"200M"
+file_type：指定上传文件类型。如："*.exe;*.zip"  
+file_upload_limit：限定上传文件个数，默认50  
+</code></pre><p>使用方法(结合easyui,统一样式)：  </p><pre><code data-origin="&lt;pre&gt;&lt;code&gt;    &amp;lt;script type=&quot;text/javascript&quot;&amp;gt;
+      var base = '${base}';  
+      $(function(){
+          $.upload({
+              url:base + &quot;/product_group/excute_import&quot;,
+              size:&quot;50MB&quot;,
+              file_type:&quot;*.xml&quot;,
+              file_upload_limit:1
+          });
+      })
+&amp;lt;/script&amp;gt;
+&amp;lt;div id=&quot;tb_safe_auth&quot;&amp;gt;
+    &amp;lt;div class=&quot;toolbar&quot; style=&quot;clear: both&quot;&amp;gt;
+        &amp;lt;span id=&quot;imgBtn&quot;&amp;gt;&amp;lt;/span&amp;gt;
+        &amp;lt;div style=&quot;position: absolute; top: 6px;left:65px&quot;&amp;gt;
+            |&amp;lt;a href=&quot;javascript:void(0);&quot; onclick=&quot;upload();&quot;
+                class=&quot;easyui-linkbutton&quot;
+                data-options=&quot;iconCls:'icon-up',plain:true&quot;&amp;gt;上传&amp;lt;/a&amp;gt;
+        &amp;lt;/div&amp;gt;
+    &amp;lt;/div&amp;gt;
+&amp;lt;/div&amp;gt;
+&amp;lt;table id=&quot;datagrid&quot; class=&quot;easyui-datagrid&quot; data-options=&quot;autoRowHeight:true,nowrap:false&quot;&amp;gt;
+    &amp;lt;thead&amp;gt;
+        &amp;lt;tr&amp;gt;
+            &amp;lt;th data-options=&quot;field:'name',width:60&quot;&amp;gt;
+                文件名
+            &amp;lt;/th&amp;gt;
+            &amp;lt;th data-options=&quot;field:'size',width:40&quot;&amp;gt;
+                文件大小
+            &amp;lt;/th&amp;gt;
+            &amp;lt;th data-options=&quot;field:'type',width:40,align:'center'&quot;&amp;gt;
+                文件类型
+            &amp;lt;/th&amp;gt;
+            &amp;lt;th data-options=&quot;field:'pro',width:60,align:'center'&quot;&amp;gt;
+                进度
+            &amp;lt;/th&amp;gt;
+            &amp;lt;th data-options=&quot;field:'state',width:80&quot;&amp;gt;
+                状态
+            &amp;lt;/th&amp;gt;
+        &amp;lt;/tr&amp;gt;
+    &amp;lt;/thead&amp;gt;
+&amp;lt;/table&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;">    &lt;script type="text/javascript"&gt;
+      var base = '${base}';  
+      $(function(){
+          $.upload({
+              url:base + "/product_group/excute_import",
+              size:"50MB",
+              file_type:"*.xml",
+              file_upload_limit:1
+          });
+      })
+&lt;/script&gt;
+&lt;div id="tb_safe_auth"&gt;
+    &lt;div class="toolbar" style="clear: both"&gt;
+        &lt;span id="imgBtn"&gt;&lt;/span&gt;
+        &lt;div style="position: absolute; top: 6px;left:65px"&gt;
+            |&lt;a href="javascript:void(0);" onclick="upload();"
+                class="easyui-linkbutton"
+                data-options="iconCls:'icon-up',plain:true"&gt;上传&lt;/a&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+&lt;table id="datagrid" class="easyui-datagrid" data-options="autoRowHeight:true,nowrap:false"&gt;
+    &lt;thead&gt;
+        &lt;tr&gt;
+            &lt;th data-options="field:'name',width:60"&gt;
+                文件名
+            &lt;/th&gt;
+            &lt;th data-options="field:'size',width:40"&gt;
+                文件大小
+            &lt;/th&gt;
+            &lt;th data-options="field:'type',width:40,align:'center'"&gt;
+                文件类型
+            &lt;/th&gt;
+            &lt;th data-options="field:'pro',width:60,align:'center'"&gt;
+                进度
+            &lt;/th&gt;
+            &lt;th data-options="field:'state',width:80"&gt;
+                状态
+            &lt;/th&gt;
+        &lt;/tr&gt;
+    &lt;/thead&gt;
+&lt;/table&gt;
+</code></pre><p>效果： </p><p><img src="res/upload.jpg" alt=""></p><p><strong>更多使用方法请参考easyui文档，本文档主要针对扩展方法做使用介绍</strong></p>
+
+<footer style="position:fixed; font-size:.8em; text-align:right; bottom:0px; margin-left:-25px; height:20px; width:100%;">generated by <a href="http://pad.haroopress.com" target="_blank">haroopad</a></footer>
+</body>
+</html>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+    <!-- 以下根据需要可对数据进行加密 -->
+    <log filename='tb_fxpg_objassess_task_log' remark='自评估任务' runmodel='repeatetimer' isvaldata='false' >
+        <CheckColumnSQL>select name from syscolumns where id=object_id('tb_chkself_task') and name='isreported'</CheckColumnSQL>
+		<AlterSQL>alter table tb_chkself_task  add isreported int default 0</AlterSQL>
+		<UpdateFlagSQL>update tb_chkself_task set isreported=0 where isreported is null</UpdateFlagSQL>
+		<CheckRowSQL>
+			<![CDATA[ 
+				select TABLE_ROWS 
+				from information_schema.TABLES  
+				where TABLE_SCHEMA='@[dbname]' and TABLE_NAME='tb_chkself_task'
+				]]>
+		</CheckRowSQL>
+		<UpdateOperSQL></UpdateOperSQL>
+		<DeleteByIDSQL></DeleteByIDSQL>
+		<DataSQL>
+			<![CDATA[ 
+				select id,taskno,taskname,IFNULL(starttime,'0000-00-00 00:00:00') as starttime,IFNULL(endtime,'0000-00-00 00:00:00') as endtime,now() as impdate
+				from (
+					SELECT id,taskid AS taskno,taskname,starttime,endtime  FROM tb_chkself_task 
+					WHERE tasktype=0 AND taskstatus=1 AND isreported=0
+				)a
+			]]>
+        </DataSQL>
+		<InsertSQL>insert into tb_fxpg_objassess_task(id,taskno,taskname,starttime,endtime,impdate,sub_sysid,sub_sysname)values(?,?,?,?,?,?,?,?)</InsertSQL>
+   	    <SuccessSQL>update tb_chkself_task  set isreported=1 where id in(@[id]) and isreported=0</SuccessSQL>
+ 	</log>

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+    <log filename='host_violation' remark='主机违规外联日志' runmodel='repeatetimer' isvaldata='false' >
+        <CheckColumnSQL>select name from syscolumns where id=object_id('T_ViolateLog') and name='rpt_isreported'</CheckColumnSQL>
+		<AlterSQL>alter table T_ViolateLog  add rpt_isreported int default 0</AlterSQL>
+		<UpdateFlagSQL>update T_ViolateLog set rpt_isreported=0 where rpt_isreported is null</UpdateFlagSQL>
+		<CheckRowSQL>
+			<![CDATA[ 
+				select rows as rowcnt
+					from sysindexes i
+					inner join sysobjects o
+					on (o.id = i.id and o.xtype='U')
+					where indid <2 and OBJECT_NAME(i.id)='T_ViolateLog'
+				]]>
+		</CheckRowSQL>
+		<UpdateOperSQL></UpdateOperSQL>
+		<DeleteByIDSQL></DeleteByIDSQL>
+		<DataSQL>
+			<![CDATA[ 
+                 select 
+					id,year_info,month_info,year_month_info,audittypename,audittype,hostname,hostip,mac,hdid,username,deptname,recorddate,impdate 
+				 from (
+					select 
+					CONVERT(varchar(100),a.guid) as id,
+					year(a.occurtime)AS year_info, 
+					month(a.occurtime)AS month_info, 
+					LEFT(CONVERT(varchar,a.occurtime,120),7) AS year_month_info,
+					'违规外联' as audittypename,
+					'10' as audittype,
+					a.hostcode as hostname,
+					a.netip as hostip ,
+					a.mac as mac,
+					a.hardid as hdid,
+					a.empname as username,
+					a.deptname as deptname,
+					 CONVERT(varchar,a.occurtime,120) as recorddate,
+					CONVERT(varchar,GETDATE(),120) as impdate
+					from T_ViolateLog a
+					where a.rpt_isreported=0	
+				)a
+			]]>
+        </DataSQL>
+		<InsertSQL>insert into tb_hostaudit_illegal(id,year_info,month_info,year_month_info,audittypename,audittype,hostname,hostip,mac,hdid,username,deptname,recorddate,impdate,sub_sysid,sub_sysname)values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)</InsertSQL>
+   	    <SuccessSQL>update T_ViolateLog  set rpt_isreported=1 where guid in(@[id]) and rpt_isreported=0</SuccessSQL>
+ 	</log>

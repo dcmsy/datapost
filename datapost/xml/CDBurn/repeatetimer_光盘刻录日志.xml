@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+    <log filename='cdburn_log' remark='光盘刻录日志' runmodel='repeatetimer' isvaldata='false' >
+        <CheckColumnSQL>select COLUMN_NAME from information_schema.COLUMNS where TABLE_SCHEMA='@[dbname]' and TABLE_NAME='tb_cdburn_action_log' and COLUMN_NAME='isreported'</CheckColumnSQL>
+		<AlterSQL>alter table tb_cdburn_action_log  add IsReported int default 0</AlterSQL>
+		<UpdateFlagSQL>update tb_cdburn_action_log set IsReported=0 where IsReported is null</UpdateFlagSQL>
+		<CheckRowSQL>select TABLE_ROWS from information_schema.TABLES  where TABLE_SCHEMA='@[dbname]' and TABLE_NAME='tb_cdburn_action_log'</CheckRowSQL>
+		<UpdateOperSQL></UpdateOperSQL>
+		<DeleteByIDSQL></DeleteByIDSQL>
+		<DataSQL>
+		select 
+			actionid,year_info,month_info,year_month_info,disccode,disctypename,discphytypename,optypename,disctype,discphytype,optype,seclevelname,burnip,burnmac,accname,auditname,deptname,isviolation,program,errcode,completeness,createdate,impdate
+		from (
+		         select
+			  a.id as actionid,
+			  DATE_FORMAT(a.create_date ,'%Y') as year_info,
+			  DATE_FORMAT(a.create_date ,'%m') as month_info,
+			  DATE_FORMAT(a.create_date ,'%Y-%m') as year_month_info,
+		          a.disc_num as disccode,
+		          (case when a.disc_type = 0 then '其它' when a.disc_type = 1 then 'CD' when a.disc_type = 2 then 'DVD' when a.disc_type = 3 then 'DVDDL' when a.disc_type = 4 then 'DD' when a.disc_type = 5 then 'HD' when a.disc_type = 6 then 'HDDL' else 'BD' end) as disctypename,
+		          (case when a.disc_physical_type = 2 then '一次写入' else '可擦写' end) as discphytypename,
+		          (case when a.operate_type = 1 then '刻录普通数据光盘' when a.operate_type = 2 then '刻录光盘镜像' when a.operate_type = 3 then '制作光盘镜像' when a.operate_type = 4 then '刻录安全密码光盘' when a.operate_type = 5  then '擦除可擦写光盘' else '刻录安全范围光盘' end) as optypename,
+			  
+			  a.disc_type as disctype,
+		          (case when a.disc_physical_type = 2 then '2' else '3' end) as discphytype,
+		          a.operate_type as optype,
+			  sec_level as seclevelname,
+			  burn_ip as burnip,
+			  burn_mac as burnmac,
+			  responsible_person_name as accname,
+			  audit_user_name as auditname,
+			  dept.dept_path as deptname,
+			  '合规' as isviolation,
+			  '光盘刻录' as program,
+		          (case when a.error_code = 0 then '成功' else '失败' end) as errcode,
+		          (case when a.completeness = 0 then '完成' else '刻录异常终止' end) as completeness,
+		          a.create_date as createdate,
+			 now() as impdate
+		          from tb_cdburn_action_log as a
+			inner join tb_dept dept on dept.id = a.dept_id
+			where isreported=0 and operate_type!=5
+				and dept.dept_path is not null
+				and dept.dept_path != ''
+				and dept.dept_path != 'N/A'
+				limit 10000
+		)a
+        </DataSQL>
+		<InsertSQL>insert into tb_cdburn_action (actionid,year_info,month_info,year_month_info,disccode,disctypename,discphytypename,optypename,disctype,discphytype,optype,seclevelname,burnip,burnmac,accname,auditname,deptname,isviolation,program,errcode,completeness,createdate,impdate,sub_sysid,sub_sysname)values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)</InsertSQL>
+   	    <SuccessSQL>update tb_cdburn_action_log set isreported=1 where id in (@[id]) </SuccessSQL>
+ 	</log>

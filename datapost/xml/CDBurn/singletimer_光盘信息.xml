@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+    <log filename='cdburn_disc' remark='光盘基本信息' runmodel='singletimer' isvaldata='true' >
+        <CheckColumnSQL></CheckColumnSQL>
+		<AlterSQL></AlterSQL>
+		<UpdateFlagSQL></UpdateFlagSQL>
+		<CheckRowSQL></CheckRowSQL>
+		<UpdateOperSQL>update tb_cdburn_disc set oper_flag='d' where sub_sysid='0401'</UpdateOperSQL>
+		<DeleteByIDSQL>delete from tb_cdburn_disc where id=?</DeleteByIDSQL>
+		<DataSQL>
+         select 
+			id,year_info,month_info,year_month_info,disccode,disctypename,discphytypename,optypename,disctype,discphytype,optype,cdstate,cdstatename,resname,auditname,deptname,errcode,createdate,seclevelname,seclevel,impdate
+		 from (
+			select 
+				d.id,
+				  DATE_FORMAT(d.create_date ,'%Y') as year_info,
+				  DATE_FORMAT(d.create_date ,'%m') as month_info,
+				  DATE_FORMAT(d.create_date ,'%Y-%m') as year_month_info,
+				d.disc_num as disccode,
+				(case when d.disc_type = 0 then '其它' when d.disc_type = 1 then 'CD' when d.disc_type = 2 then 'DVD' when d.disc_type = 3 then 'DVDDL' when d.disc_type = 4 then 'DD' when d.disc_type = 5 then 'HD' when d.disc_type = 6 then 'HDDL' else 'BD' end) as disctypename,
+				(case when d.disc_physical_type = 2 then '一次写入' else '可擦写' end) as discphytypename,
+				(case when d.operate_type = 1 then '刻录普通数据光盘' when d.operate_type = 2 then '刻录光盘镜像' when d.operate_type = 3 then '制作光盘镜像' when d.operate_type = 4 then '刻录安全密码光盘' when d.operate_type = 5  then '擦除可擦写光盘' else '刻录安全范围光盘' end) as optypename,
+				(case when d.disc_state = 0 then '启用' when d.disc_state = 1 then '领用' when d.disc_state = 2 then '归还' when d.disc_state = 3 then '归档' else '销毁' end) as cdstatename,
+				 d.disc_type as disctype,
+				(case when d.disc_physical_type = 2 then '2' else '3' end) as discphytype,
+				d.operate_type as optype,
+				(case when d.disc_state = 0 then '1' when d.disc_state = 1 then '2' when d.disc_state = 2 then '3' when d.disc_state = 3 then '4' else '0' end) as cdstate,
+				d.responsible_person_name as resname,
+				d.audit_user_name as auditname,
+				dept.dept_path as deptname,
+				(case when d.error_code = 0 then '成功' else '失败' end) as errcode,
+				d.create_date as createdate,
+				a.sec_level as seclevelname,
+				(case a.sec_level when '绝密' then '0' when '机密' then '1' when '秘密' then '2' when '内部' then '3' when '公开' then '4' else '99' end) as seclevel,
+				now() as impdate
+			from tb_cdburn_disc d
+			inner join tb_cdburn_action_log a on d.id=a.id
+			inner join tb_dept dept on dept.id = d.dept_id
+			where dept.dept_path is not null
+				and dept.dept_path != ''
+				and dept.dept_path != 'N/A'
+		)a
+        </DataSQL>
+		<InsertSQL>insert into tb_cdburn_disc(id,year_info,month_info,year_month_info,disccode,disctypename,discphytypename,optypename,disctype,discphytype,optype,cdstate,cdstatename,resname,auditname,deptname,errcode,createdate,seclevelname,seclevel,impdate,sub_sysid,sub_sysname)values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)</InsertSQL>
+   	    <SuccessSQL></SuccessSQL>
+ 	</log>

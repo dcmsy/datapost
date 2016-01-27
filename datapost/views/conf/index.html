@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" /> 
+<title>数据上报服务配置</title>
+<link rel="stylesheet" type="text/css" href="/static/css/base.css">
+<link rel="stylesheet" type="text/css" href="/static/css/easyuiPage/easyui.css">
+<link rel="stylesheet" type="text/css" href="/static/css/easyuiPage/easyuinew.css">
+<link rel="stylesheet" type="text/css" href="/static/css/style.css">
+</head>
+<body class="easyui-layout">
+	<div data-options="region:'north'" border="none" class="zf-headerWapper" style="height:84px;">
+		<img class="logo" src="/static/images/logo_easyui.png">
+	</div>
+	
+	<div data-options="region:'west'" class="zf-navSider" border="none" style="width:181px;">
+	    <h1 class="zf-navSider-title"><i class="iconfont">&#xf0174;</i><span>服务参数</span></h1>
+	    <div class="zf-navSider-subnav">
+			{{range $k, $v := .list}}
+				<a class="zf-navSider-navlink" href="javascript:void(0)" name="/index/list?sys={{$v.Systype}}&sysname={{$v.Sysname}}"><i class="iconfont">&#xe696;</i><span>{{$v.Sysname}}</span></a>
+			{{end}}
+	    </div>
+		<h1 class="zf-navSider-title"><i class="iconfont">&#xf0174;</i><span>帮助</span></h1>
+	    <div class="zf-navSider-subnav">
+	    	<a class="zf-navSider-navlink" href="javascript:void(0)" name="/index/help"><i class="iconfont">&#xf0161;</i><span>帮助</span></a>
+	    </div>
+	</div>
+	<div data-options="region:'center'" border="none">
+		<div class="easyui-layout" fit="true">
+			<div data-options="region:'west'" class="zf-siderOpt" border="none" style="width:10px;"></div>
+			<div data-options="region:'center'" border="none" fit="true">
+				<form id='mform' name='mform'  method="post"></form>
+				<iframe id="mainFrame" name="mainFrame" frameborder="0" width="99%" height="100%"></iframe>
+			</div>
+		</div>
+	</div>
+	<div id="ieversionTipBg"></div>
+	<div id="ieversionTip">
+		<div class="ui-tipbox ui-tipbox-error" style="width:700px;margin:10px auto;">
+			<div class="ui-tipbox-icon"><i class="iconfont" title="提示">&#xf0142;</i></div>
+			<div class="ui-tipbox-content">
+				<h3 class="ui-tipbox-title">您知道您的浏览器版本已经过时了吗？</h3>
+				<p class="ui-tipbox-explain">为了得到更好的体验效果，建议您对浏览器进行升级，您可以选择大家都在用的:IE8以上版本</p>
+				<p>
+				</p><br><br>
+				<p>
+					<a href="javascript:goPage()" class="ui-ft ui-ft-lg">&gt;&gt;&gt;继续访问</a> 
+				</p>
+			</div>
+		</div>
+	</div>
+<script type="text/javascript" src="/static/js/json2.js"></script>
+<script type="text/javascript" src="/static/js/jquery-1.7.2.min.js"></script>
+<script type="text/javascript" src="/static/js/jquery.easyui.min.js"></script>
+<script type="text/javascript" src="/static/js/jquery.easyui-ext.js"></script>
+<script type="text/javascript">
+$(function(){
+	//判断浏览器版本
+	var Sys = {};
+	var ua = navigator.userAgent.toLowerCase();
+	var s;
+	s = ua.match(/msie ([\d.]+)/);
+	(s = ua.match(/msie ([\d.]+)/)) ? Sys.ie = s[1] : 0;
+	if (Sys.ie && (Sys.ie=='5.0' || Sys.ie=='6.0' )) {
+		$("#ieversionTipBg").show();
+		$("#ieversionTip").show();
+	}
+	//设置菜单的显示隐藏折叠操作
+	$(".zf-navSider .zf-navSider-title").click(function(){
+		$(this).addClass('on').siblings('.zf-navSider-title').removeClass('on');
+		$(this).next(".zf-navSider-subnav").show('slow').siblings('.zf-navSider-subnav').hide('slow');
+	});
+	$(".zf-navSider .zf-navSider-subnav .zf-navSider-navlink").click(function(){
+		$(this).addClass('on').siblings().removeClass('on');
+		$(this).parent().siblings('.zf-navSider-subnav').children('a').removeClass('on');
+	});
+	$(".zf-navSider .zf-navSider-title:first").click();
+	$(".zf-navSider .zf-navSider-subnav .zf-navSider-navlink:first").click();
+
+	$(".zf-navSider .zf-navSider-subnav .zf-navSider-navlink").click(function(){
+		
+		var formObj;
+		var doc = document;
+		var url = $(this).attr('name');
+		formObj = doc.getElementById("mform");
+		formObj.target = "mainFrame";
+		formObj.action = url;
+		formObj.submit();
+		/*
+		$("iframe[name='mainFrame']").attr('src',$(this).attr('name'));
+		*/
+		var text = $(this).children("span").text();
+		var parent = $(this).parent().prev('.zf-navSider-title').children('span').text();
+	})
+	//默认显示第一个页面
+	$(".zf-navSider .zf-navSider-subnav .zf-navSider-navlink:first").click();
+	//控制左侧菜单的显示隐藏
+	$(".zf-siderOpt").toggle(function(event) {
+		$('body').layout('collapse','west');  
+		$(this).addClass('expand');
+	},function(){
+		$('body').layout('expand','west');  
+		$(this).removeClass('expand');
+	});
+})
+function goPage(){
+	$("#ieversionTipBg").hide();
+	$("#ieversionTip").hide();	
+}
+</script>
+
+</body>
+
+</html>

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+    <log filename='selfcheck' remark='用户自查结果日志' runmodel='singletimer' >
+        <CheckColumnSQL></CheckColumnSQL>
+		<AlterSQL></AlterSQL>
+		<UpdateFlagSQL></UpdateFlagSQL>
+		<CheckRowSQL></CheckRowSQL>
+		<UpdateOperSQL>update tb_netcheck_selfcheck set oper_flag='d' where sub_sysid='0101' and year_month_info=DATE_FORMAT(now() ,'%Y-%m')</UpdateOperSQL>
+		<DeleteByIDSQL>delete from tb_netcheck_selfcheck where id=?</DeleteByIDSQL>		
+		<DataSQL>
+			select
+			id,year_info,month_info,year_month_info,unitname,deptname,hostid,hostname,username,mac,ip,hdid,isself,checkdate,impdate
+			from (
+				select 
+				guid as id,
+				cast(year(getdate()) as varchar(4)) as year_info,
+				right('0'+cast(month(getdate()) as varchar(4)),2) as month_info,
+				LEFT(CONVERT(varchar,GETDATE(),120),7) as year_month_info,
+				REPLACE(o.danweifullname,'_','|') as unitname,
+				REPLACE(o.chushifullname,'_','|') as deptname, 
+				s.sid as hostid,
+				s.mechname as hostname,
+				o.name username,
+				s.mac as mac,
+				s.ip as ip,
+				s.hdmodel + '|'+ s.hdSerial as hdid, 
+				case ISNULL(h.sid,'0') when '0' then '未自查' else '自查' end as isself,
+				convert(varchar,getdate(),120) as checkdate,
+				CONVERT(varchar,GETDATE(),120) as impdate
+				from 
+				(chkproof.dbo.chkproof_organization o inner join chkproof.dbo.chkproof_sysinfo s on s.bjcrid = o.renyuan_id)
+				left join
+				(chkproof.dbo.chkproof_tasks t inner join chkproof.dbo.chkproof_taskchkhosts h on t.tid=h.tid) 
+				on h.sid=s.sid 
+					and t.tasktype=5
+					and left(ISNULL(t.shijian,'0000-00-00'),7)=cast(year(getdate()) as varchar(4))+ '-' +right('0'+cast(month(getdate()) as varchar(4)),2)
+					and o.chushifullname is not null
+					and o.chushifullname != ''
+					and o.chushifullname !='N/A'
+				group by guid,o.danweifullname,o.chushifullname, s.sid,s.mechname,o.name,s.ip,s.mac,s.hdmodel,s.hdSerial,case ISNULL(h.sid,'0') when '0' then '未自查' else '自查' end
+			)a
+        </DataSQL>
+		<InsertSQL>insert into tb_netcheck_selfcheck (id,year_info,month_info,year_month_info,unitname,deptname,hostid,hostname,username,mac,ip,hdid,isself,checkdate,impdate,sub_sysid,sub_sysname)values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)</InsertSQL>
+   	    <SuccessSQL></SuccessSQL>
+ 	</log>

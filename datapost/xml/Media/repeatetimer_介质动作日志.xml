@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+    <log filename='media_log' remark='介质插拔动作日志' runmodel='repeatetimer' isvaldata='false' >
+        <CheckColumnSQL>select COLUMN_NAME from information_schema.COLUMNS where TABLE_SCHEMA='@[dbname]' and TABLE_NAME='tb_log_media_action' and COLUMN_NAME='IsRpt_violation'</CheckColumnSQL>
+		<AlterSQL>alter table tb_log_media_action  add IsRpt_violation int default 0</AlterSQL>
+		<UpdateFlagSQL>update tb_log_media_action set IsRpt_violation=0 where IsRpt_violation is null</UpdateFlagSQL>
+		<CheckRowSQL>select TABLE_ROWS from information_schema.TABLES  where TABLE_SCHEMA='@[dbname]' and TABLE_NAME='tb_log_media_action'</CheckRowSQL>
+		<UpdateOperSQL></UpdateOperSQL>
+		<DeleteByIDSQL></DeleteByIDSQL>
+		<DataSQL>
+			select actionid,year_info,month_info,year_month_info,mediaid,mediatype,mediatypename,actiontype,actiontypename,isviolation,hostip,musername,deptname,loglevel,loglevelname,actiondate,impdate
+			from (
+			select 
+			a.id as actionid,
+			DATE_FORMAT(a.action_time ,'%Y') as year_info,
+			DATE_FORMAT(a.action_time ,'%m') as month_info,
+			DATE_FORMAT(a.action_time ,'%Y-%m') as year_month_info,
+			m.id as mediaid,
+			
+			(case (case m.type when 2 then '安全U盘' else '普通U盘' end) when '安全U盘' then '03' when '普通U盘' then '04' end) as mediatype,
+			(case m.type when 2 then '安全U盘' else '普通U盘' end) as mediatypename,
+			(case a.action_type when '插入介质' then '0' when '移除介质'  then '1' end) as actiontype, 
+			a.action_type as actiontypename,
+			'合规' as isviolation,
+			
+			h.ip as hostip,
+			a.muser_name as musername,
+			a.mdept_name as deptname,
+			'6' as loglevel,
+			'信息' as loglevelname,
+			
+			a.action_time as actiondate, 
+			now() as impdate
+			
+			from tb_log_media_action a
+			left join tb_mediainfo m on m.id = a.media_id
+			left join tb_host h on h.id = a.host_id
+			 where a.IsRpt_violation=0
+			and a.mdept_name is not null
+			and a.mdept_name != ''
+			and a.mdept_name != 'N/A'
+			limit 10000
+			)a
+        </DataSQL>
+		<InsertSQL>insert into tb_media_action(actionid,year_info,month_info,year_month_info,mediaid,mediatype,mediatypename,actiontype,actiontypename,isviolation,hostip,musername,deptname,loglevel,loglevelname,actiondate,impdate,sub_sysid,sub_sysname)values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)</InsertSQL>
+   	    <SuccessSQL>update tb_log_media_action  set IsRpt_violation=1 where id in(@[id]) and IsRpt_violation=0</SuccessSQL>
+ 	</log>

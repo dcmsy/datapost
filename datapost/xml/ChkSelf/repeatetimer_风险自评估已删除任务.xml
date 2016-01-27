@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+    <!-- 以下根据需要可对数据进行加密 -->
+    <log filename='tb_chkself_deletedtasks_log' remark='自评估已删除任务' runmodel='repeatetimer' isvaldata='false' >
+        <CheckColumnSQL>select name from syscolumns where id=object_id('tb_chkself_deletedtasks') and name='isreported'</CheckColumnSQL>
+		<AlterSQL>alter table tb_chkself_deletedtasks  add isreported int default 0</AlterSQL>
+		<UpdateFlagSQL>update tb_chkself_deletedtasks set isreported=0 where isreported is null</UpdateFlagSQL>
+		<CheckRowSQL>
+			<![CDATA[ 
+				select TABLE_ROWS 
+				from information_schema.TABLES  
+				where TABLE_SCHEMA='@[dbname]' and TABLE_NAME='tb_chkself_deletedtasks'
+			]]>
+		</CheckRowSQL>
+		<UpdateOperSQL></UpdateOperSQL>
+		<DeleteByIDSQL></DeleteByIDSQL>
+		<DataSQL>
+			<![CDATA[ 
+                select taskid,now() as impdate
+				 from tb_chkself_deletedtasks where isreported=0
+			]]>
+        </DataSQL>
+		<InsertSQL>insert into tb_fxpg_deletedtasks(taskid,impdate,sub_sysid,sub_sysname)values(?,?,?,?)</InsertSQL>
+   	    <SuccessSQL>update tb_chkself_deletedtasks  set isreported=1 where taskid in(@[id]) and isreported=0</SuccessSQL>
+ 	</log>

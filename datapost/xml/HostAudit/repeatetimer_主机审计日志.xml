@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+    <log filename='hostaudit_events' remark='主机审计日志' runmodel='repeatetimer' isvaldata='false' >
+        <CheckColumnSQL>select COLUMN_NAME from information_schema.COLUMNS where TABLE_SCHEMA='@[dbname]' and TABLE_NAME='tb_log_host' and COLUMN_NAME='isreported'</CheckColumnSQL>
+		<AlterSQL>alter table tb_log_host  add IsReported int default 0</AlterSQL>
+		<UpdateFlagSQL>update tb_log_host set IsReported=0 where IsReported is null</UpdateFlagSQL>
+		<CheckRowSQL>select TABLE_ROWS from information_schema.TABLES  where TABLE_SCHEMA='@[dbname]' and TABLE_NAME='tb_log_host'</CheckRowSQL>
+		<UpdateOperSQL></UpdateOperSQL>
+		<DeleteByIDSQL></DeleteByIDSQL>		
+		<DataSQL>
+          select a.id as id,
+          (case a.audit_type
+          when 1 then '主机信息审计'
+          when 2 then '网卡配置审计'
+          when 3 then '文件日志审计'
+          when 4 then '打印监控审计'
+          when 5 then '拨号日志审计'
+          when 6 then '进程监控审计'
+          when 7 then '开机关机审计'
+          when 8 then '账户监控审计'
+          when 9 then '共享监控审计'
+          when 10 then '主机配置审计'
+          when 11 then '服务监控审计'
+          when 12 then '系统日志审计'
+          when 13 then '违规卸载审计'
+          when 14 then '安装目录审计'
+          when 15 then '异常监控审计'
+          when 16 then '连接监控审计'
+          when 17 then '移动介质审计' end) as audittypename,
+		  DATE_FORMAT(a.date_time ,'%Y') as year_info,
+	      DATE_FORMAT(a.date_time ,'%m') as month_info,
+	      DATE_FORMAT(a.date_time ,'%Y-%m') as year_month_info,
+          h.ip  as hostip,
+          h.sn  as hdid,
+          a.host_name as hostname,
+          a.user_name as username,
+          a.dept_name as deptname,
+          a.content as details,
+          a.result as result,
+          a.date_time as recorddate,
+          a.level as level,
+          a.type as eventtype,
+          a.product_type as producttype,
+          a.behaviour_type as behaviourtype,
+		  now() as impdate
+          from tb_log_host a 
+          left join tb_host h on h.id = a.host_id
+          where a.isreported=0 
+		and a.audit_type in('1','2','3','4','5','6','7','8','9','10','11','12','13','14','15','16','17')
+		and a.dept_name is not null
+		and a.dept_name != ''
+		and a.dept_name != 'N/A'
+		limit 10000
+        </DataSQL>
+		<InsertSQL>insert into tb_hostaudit_log (id,audittypename,year_info,month_info,year_month_info,hostip,hdid,hostname,username,deptname,details,result,recorddate,level,eventtype,producttype,behaviourtype,impdate,sub_sysid , sub_sysname)values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)</InsertSQL>
+   	    <SuccessSQL>update tb_log_host set IsReported=1 where id in (@[id]) </SuccessSQL>
+ 	</log>

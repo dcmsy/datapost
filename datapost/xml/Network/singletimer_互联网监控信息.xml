@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+    <log filename='network_control' remark='互联网监控信息日志' runmodel='singletimer' >
+        <CheckColumnSQL></CheckColumnSQL>
+		<AlterSQL></AlterSQL>
+		<UpdateFlagSQL></UpdateFlagSQL>
+		<CheckRowSQL></CheckRowSQL>
+		<UpdateOperSQL></UpdateOperSQL>
+		<DeleteByIDSQL></DeleteByIDSQL>
+		<DataSQL></DataSQL>
+		<InsertSQL>insert into tb_network_control(id,sitename,siteurl,year_info,month_info,year_month_info,alarmnum,suspicionnum,attentionnum,proofnum,logdate,impdate,systype,sub_sysid,sub_sysname)values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)</InsertSQL>
+   	    <SuccessSQL></SuccessSQL>
+ 	</log>

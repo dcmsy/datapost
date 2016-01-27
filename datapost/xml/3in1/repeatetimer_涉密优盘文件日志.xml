@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+    <log filename='safetydisk_operate_log' remark='涉密优盘文件日志' runmodel='repeatetimer' isvaldata='false' >
+        <CheckColumnSQL>select name from syscolumns where id=object_id('T_UsbFileLog') and name='isreported'</CheckColumnSQL>
+		<AlterSQL>alter table T_UsbFileLog  add isreported int default 0</AlterSQL>
+		<UpdateFlagSQL>update T_UsbFileLog set isreported=0 where isreported is null</UpdateFlagSQL>
+		<CheckRowSQL>
+			<![CDATA[ 
+				select rows as rowcnt
+					from sysindexes i
+					inner join sysobjects o
+					on (o.id = i.id and o.xtype='U')
+					where indid <2 and OBJECT_NAME(i.id)='T_UsbFileLog'
+				]]>
+		</CheckRowSQL>
+		<UpdateOperSQL></UpdateOperSQL>
+		<DeleteByIDSQL></DeleteByIDSQL>
+		<DataSQL>
+			<![CDATA[ 
+                   select 
+					id,year_info,month_info,year_month_info,disksn,actionType,actiontypename,scope,hostip,hostname,unitname,deptname,username,disk_username,srcPath,destPath,createdate,impdate
+				from (
+					SELECT CONVERT(varchar(100),l.guid) as id,
+					year(l.opertime)AS year_info, 
+					month(l.opertime)AS month_info, 
+					LEFT(CONVERT(varchar,l.opertime,120),7) AS year_month_info,
+					l.diskcode as disksn,
+					d.usedrange as scope,
+					d.fullname as deptname,
+					'' as unitname,
+					d.empname as disk_username,
+					host.hostip as hostip,
+					host.hostname as hostname,
+					e.empname as username,
+					l.SrcFilePath as srcPath,
+					l.DestFilePath as destPath,
+					(case
+					when l.opertype='创建' then '1'
+					when l.opertype='移动' then '2'
+					when l.opertype='复制' then '4'
+					when
+					l.opertype='删除' then '5'
+					when l.opertype='创建目录' then '6'
+					when
+					l.opertype='删除目录' then '7'
+					when l.opertype='重命名' then '3'
+					when
+					l.opertype='格式化' then '8'
+					else '99' end) as actiontype,
+					(case
+					when l.opertype='创建' then '创建文件'
+					when l.opertype='移动' then '移动文件'
+					when l.opertype='复制' then '复制文件'
+					when
+					l.opertype='删除' then '删除'
+					when l.opertype='创建目录' then '创建目录'
+					when
+					l.opertype='删除目录' then '删除目录'
+					when l.opertype='重命名' then '重命名文件'
+					when
+					l.opertype='格式化' then '格式化'
+					else '其他' end) as actiontypename,
+					CONVERT(varchar,l.opertime,120) as createdate,
+					CONVERT(varchar,GETDATE(),120) as impdate
+					FROM T_UsbFileLog l
+					left join V_FlashDisk d on d.diskcode
+					= l.diskcode
+					left join v_hostinfo host on host.hostcode=l.hostcode
+					left join v_employee e on e.empid=host.empid
+					WHERE l.isreported='0'
+				)a
+			]]>
+        </DataSQL>
+		<InsertSQL>insert into tb_safetydisk_operate_log(id,year_info,month_info,year_month_info,disksn,actionType,actiontypename,scope,hostip,hostname,unitname,deptname,username,disk_username,srcPath,destPath,createdate,impdate,sub_sysid,sub_sysname)values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)</InsertSQL>
+   	    <SuccessSQL>update T_UsbFileLog set isreported=1 where guid in(@[id]) and isreported=0</SuccessSQL>
+ 	</log>

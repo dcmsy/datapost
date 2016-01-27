@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+    <log filename='alarm_log' remark='三合一外联日志' runmodel='repeatetimer' isvaldata='false' >
+        <CheckColumnSQL>select name from syscolumns where id=object_id('T_ViolateLog') and name='isreported'</CheckColumnSQL>
+		<AlterSQL>alter table T_ViolateLog  add isreported int default 0</AlterSQL>
+		<UpdateFlagSQL>update T_ViolateLog set isreported=0 where isreported is null</UpdateFlagSQL>
+		<CheckRowSQL>
+			<![CDATA[
+				select rows as rowcnt
+					from sysindexes i
+					inner join sysobjects o
+					on (o.id = i.id and o.xtype='U')
+					where indid <2 and OBJECT_NAME(i.id)='T_ViolateLog'
+				]]>
+		</CheckRowSQL>
+		<UpdateOperSQL></UpdateOperSQL>
+		<DeleteByIDSQL></DeleteByIDSQL>
+		<DataSQL>
+			<![CDATA[
+                select 
+					logid,zone,unitname,hostname,deptname,username,ncard,mac,
+					hostip,os,mboard,hdid,ver,logdesc,company,logdate,reserve,impdate
+					from (
+					select 
+					CONVERT(varchar(100),guid) as logid,
+					zonecode as zone,
+					unitname as unitname,
+					hostcode as hostname,
+					deptname as deptname,
+					empname as username,
+					netcard as ncard,
+					mac as mac,
+					netip as hostip,
+					os as os,
+					mboard as mboard,
+					hardid as hdid,
+					softversion as ver,
+					description as logdesc,
+					companycode as company,
+					 CONVERT(varchar,occurtime,120) as logdate,
+					reserve as reserve,
+					CONVERT(varchar,GETDATE(),120) as impdate
+					from T_ViolateLog 
+					where isreported=0
+				)a
+			]]>
+        </DataSQL>
+		<InsertSQL>insert into tb_alarm_log(logid,zone,unitname,hostname,deptname,username,ncard,mac,hostip,os,mboard,hdid,ver,logdesc,company,logdate,reserve,impdate,sub_sysid,sub_sysname)values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)</InsertSQL>
+   	    <SuccessSQL>update T_ViolateLog   set IsReported=1 where Guid in(@[id]) and IsReported=0</SuccessSQL>
+ 	</log>

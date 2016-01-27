@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+    <log filename='host_violation_net' remark='主机违规日志' runmodel='singletimer' >
+        <CheckColumnSQL></CheckColumnSQL>
+		<AlterSQL></AlterSQL>
+		<UpdateFlagSQL></UpdateFlagSQL>
+		<CheckRowSQL></CheckRowSQL>
+		<UpdateOperSQL>update tb_hostaudit_illegal set oper_flag='d' where sub_sysid='0101' and year_month_info=DATE_FORMAT(now() ,'%Y-%m')</UpdateOperSQL>
+		<DeleteByIDSQL>delete from tb_hostaudit_illegal where logicid=?</DeleteByIDSQL>	
+		<DataSQL>
+			select 
+			(year_month_info+'#'+hostid+'#'+hdid+'#'+ mac+'#'+ deptname+'#'+hostip+'#'+username +'#'+hostname+'#'+recorddate+'#'+isViolation)as logicid,year_info, month_info, year_month_info, hostid,hdid, mac, deptname, hostip, username,'13' as auditType,'保密检查' as audittypename,hostname,recorddate,isViolation,impdate
+					from ( 
+					select    distinct
+					          LEFT(sta.basetime,4)as year_info,
+					          RIGHT(sta.basetime,2) as month_info,
+					          LEFT(sta.basetime,4)+'-'+RIGHT(sta.basetime,2) as year_month_info,
+							  REPLACE(o.chushifullname,'_','|') as deptname,
+					          
+					          s.sid as hostid,
+					          s.mechname as hostname,
+					          o.name as username,
+					          s.mac as mac,
+					          s.ip as hostip,
+					          '' as mboard,
+					          s.hdmodel + '|'+ s.hdSerial as hdid, 
+					          case rpt.result when 'True' then '合规' when 'False' then '违规'  end as isViolation,
+					          LEFT(sta.basetime,4) +'-'+RIGHT(sta.basetime,2)+'-01' as recorddate,
+					          CONVERT(varchar,GETDATE(),120) as impdate
+					          from  chkproof_stattask sta
+					          inner join  chkproof_stattask_report rpt on rpt.stid=sta.id
+					          inner join ( chkproof_organization o
+					          inner join  chkproof_sysinfo s on s.bjcrid = o.renyuan_id) on s.sid = rpt.sid 
+							where  cast(LEFT(sta.basetime,4) as int)=year(getdate()) and cast(RIGHT(sta.basetime,2) as int)=month(getdate()) 
+					                       and o.chushifullname is not null
+							       and o.chushifullname != ''
+							       and o.chushifullname != 'N/A'
+							       and (rpt.result = 'False')
+					) a
+        </DataSQL>
+		<InsertSQL>insert into tb_hostaudit_illegal(logicid,id,year_info, month_info, year_month_info, hostid,hdid, mac, deptname, hostip, username,auditType,audittypename,hostname,recorddate,isViolation,impdate,sub_sysid,sub_sysname)values(?,uuid(),?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)</InsertSQL>
+   	    <SuccessSQL></SuccessSQL>
+ 	</log>

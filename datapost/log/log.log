@@ -1,0 +1,154 @@
+
+2016/01/04 13:43:15 main.go:295: error [copyFile: open C:\Program Files (x86)\Intax\rptpost/plugins/java.rpt.datapost/WebRoot/xmlConf//xmlConf.ini: The system cannot find the file specified.]
+
+2016/01/04 13:43:15 main.go:303: info [desIniFile: xml_bak/3in1/3in1.ini file not exist!]
+
+2016/01/04 13:43:15 main.go:311: info [copy file from : C:\Program Files (x86)\Intax\rptpost\plugins\java.rpt.datapost\WebRoot\xmlConf\3in1/3in1.ini  to  xml_bak/3in1/3in1.ini]
+
+2016/01/04 13:43:15 main.go:303: info [desIniFile: xml_bak/Alarm/Alarm.ini file not exist!]
+
+2016/01/04 13:43:15 main.go:311: info [copy file from : C:\Program Files (x86)\Intax\rptpost\plugins\java.rpt.datapost\WebRoot\xmlConf\Alarm/Alarm.ini  to  xml_bak/Alarm/Alarm.ini]
+
+2016/01/04 13:43:15 main.go:303: info [desIniFile: xml_bak/CDBurn/CDBurn.ini file not exist!]
+
+2016/01/04 13:43:15 main.go:311: info [copy file from : C:\Program Files (x86)\Intax\rptpost\plugins\java.rpt.datapost\WebRoot\xmlConf\CDBurn/CDBurn.ini  to  xml_bak/CDBurn/CDBurn.ini]
+
+2016/01/04 13:43:15 main.go:303: info [desIniFile: xml_bak/Chk/Chk.ini file not exist!]
+
+2016/01/04 13:43:15 main.go:311: info [copy file from : C:\Program Files (x86)\Intax\rptpost\plugins\java.rpt.datapost\WebRoot\xmlConf\Chk/Chk.ini  to  xml_bak/Chk/Chk.ini]
+
+2016/01/04 13:43:15 main.go:303: info [desIniFile: xml_bak/HostAudit/HostAudit.ini file not exist!]
+
+2016/01/04 13:43:15 main.go:311: info [copy file from : C:\Program Files (x86)\Intax\rptpost\plugins\java.rpt.datapost\WebRoot\xmlConf\HostAudit/HostAudit.ini  to  xml_bak/HostAudit/HostAudit.ini]
+
+2016/01/04 13:43:15 main.go:303: info [desIniFile: xml_bak/Media/Media.ini file not exist!]
+
+2016/01/04 13:43:15 main.go:311: info [copy file from : C:\Program Files (x86)\Intax\rptpost\plugins\java.rpt.datapost\WebRoot\xmlConf\Media/Media.ini  to  xml_bak/Media/Media.ini]
+
+2016/01/04 13:43:15 main.go:303: info [desIniFile: xml_bak/Media_GA/Media_GA.ini file not exist!]
+
+2016/01/04 13:43:15 main.go:311: info [copy file from : C:\Program Files (x86)\Intax\rptpost\plugins\java.rpt.datapost\WebRoot\xmlConf\Media_GA/Media_GA.ini  to  xml_bak/Media_GA/Media_GA.ini]
+
+2016/01/04 13:43:15 main.go:303: info [desIniFile: xml_bak/Nac/Nac.ini file not exist!]
+
+2016/01/04 13:43:15 main.go:311: info [copy file from : C:\Program Files (x86)\Intax\rptpost\plugins\java.rpt.datapost\WebRoot\xmlConf\Nac/Nac.ini  to  xml_bak/Nac/Nac.ini]
+
+2016/01/04 13:43:15 main.go:303: info [desIniFile: xml_bak/Network/Network.ini file not exist!]
+
+2016/01/04 13:43:15 main.go:311: info [copy file from : C:\Program Files (x86)\Intax\rptpost\plugins\java.rpt.datapost\WebRoot\xmlConf\Network/Network.ini  to  xml_bak/Network/Network.ini]
+
+2016/01/04 13:43:15 main.go:303: info [desIniFile: xml_bak/Print/Print.ini file not exist!]
+
+2016/01/04 13:43:15 main.go:311: info [copy file from : C:\Program Files (x86)\Intax\rptpost\plugins\java.rpt.datapost\WebRoot\xmlConf\Print/Print.ini  to  xml_bak/Print/Print.ini]
+
+2016/01/04 13:43:15 main.go:303: info [desIniFile: xml_bak/Sensitive/Sensitive.ini file not exist!]
+
+2016/01/04 13:43:15 main.go:311: info [copy file from : C:\Program Files (x86)\Intax\rptpost\plugins\java.rpt.datapost\WebRoot\xmlConf\Sensitive/Sensitive.ini  to  xml_bak/Sensitive/Sensitive.ini]
+
+2016/01/04 13:43:15 main.go:303: info [desIniFile: xml_bak/Wgwl/Wgwl.ini file not exist!]
+
+2016/01/04 13:43:15 main.go:311: info [copy file from : C:\Program Files (x86)\Intax\rptpost\plugins\java.rpt.datapost\WebRoot\xmlConf\Wgwl/Wgwl.ini  to  xml_bak/Wgwl/Wgwl.ini]
+
+2016/01/04 13:43:15 main.go:303: info [desIniFile: DataProvider.xml file not exist!]
+
+2016/01/04 13:43:15 main.go:311: info [copy file from : C:\Program Files (x86)\Intax\rptpost/plugins/java.rpt.datapost/WebRoot/xmlConf/DataProvider.xml  to  DataProvider.xml]
+
+2016/01/04 13:43:15 main.go:61: info [Chk]
+
+2016/01/04 13:43:15 main.go:61: info [Print]
+
+2016/01/04 13:43:15 main.go:61: info [Nac]
+
+2016/01/04 13:43:15 main.go:61: info [Wgwl]
+
+2016/01/04 13:43:15 main.go:61: info [Sensitive]
+
+2016/01/04 13:43:15 main.go:61: info [CDBurn]
+
+2016/01/04 13:43:15 main.go:61: info [Network]
+
+2016/01/04 13:43:15 main.go:61: info [HostAudit]
+
+2016/01/04 13:43:15 main.go:61: info [3in1]
+
+2016/01/04 13:43:15 main.go:61: info [Media]
+
+2016/01/04 13:43:15 main.go:64: info [state================ start]
+
+2016/01/04 13:43:15 main.go:79: info [trans================ Media]
+
+2016/01/04 13:43:15 main.go:80: info [notrans================ ]
+
+2016/01/04 13:43:15 main.go:243: info [platform=========================== 违规外联 中孚违规外联互联网监控平台 <nil>]
+
+2016/01/04 13:43:15 main.go:243: info [platform=========================== 光盘刻录 光盘刻录监控与审计系统 <nil>]
+
+2016/01/04 13:43:15 main.go:243: info [platform=========================== 主机检查 中孚计算机终端保密检查系统 <nil>]
+
+2016/01/04 13:43:15 main.go:243: info [platform=========================== 介质管理 USB移动存储介质使用管理系统 <nil>]
+
+2016/01/04 13:43:15 main.go:243: info [platform=========================== 打印审计 中孚打印安全监控与审计系统 <nil>]
+
+2016/01/04 13:43:15 main.go:243: info [platform=========================== 互联网监控 山东中孚互联网监控系统 <nil>]
+
+2016/01/04 13:43:15 main.go:243: info [platform=========================== 敏感信息 敏感信息实时监管系统 <nil>]
+
+2016/01/04 13:43:15 main.go:243: info [platform=========================== 三合一 涉密计算机及移动存储介质保密管理系统 <nil>]
+
+2016/01/04 13:43:15 main.go:243: info [platform=========================== 主机审计 主机监控与审计系统 <nil>]
+
+2016/01/04 13:43:15 main.go:243: info [platform=========================== 主机审计 中孚介质管理(公安) <nil>]
+
+2016/01/04 13:43:15 main.go:243: info [platform=========================== 接入控制 网络接入控制系统 <nil>]
+
+2016/01/04 13:49:28 main.go:259: error [捕获到异常： GetFileAttributesEx C:\Program Files (x86)\Intax\rptpost/plugins/java.rpt.datapost/WebRoot/xmlConf/: The system cannot find the file specified.]
+
+2016/01/04 13:49:28 main.go:295: error [copyFile: open C:\Program Files (x86)\Intax\rptpost/plugins/java.rpt.datapost/WebRoot/xmlConf/DataProvider.xml: The system cannot find the path specified.]
+
+2016/01/04 13:49:28 main.go:61: info [Chk]
+
+2016/01/04 13:49:28 main.go:61: info [Print]
+
+2016/01/04 13:49:28 main.go:61: info [Nac]
+
+2016/01/04 13:49:28 main.go:61: info [Wgwl]
+
+2016/01/04 13:49:28 main.go:61: info [Sensitive]
+
+2016/01/04 13:49:28 main.go:61: info [CDBurn]
+
+2016/01/04 13:49:28 main.go:61: info [Network]
+
+2016/01/04 13:49:28 main.go:61: info [HostAudit]
+
+2016/01/04 13:49:28 main.go:61: info [3in1]
+
+2016/01/04 13:49:28 main.go:61: info [Media]
+
+2016/01/04 13:49:28 main.go:64: info [state================ start]
+
+2016/01/04 13:49:28 main.go:79: info [trans================ Media]
+
+2016/01/04 13:49:28 main.go:80: info [notrans================ ]
+
+2016/01/04 13:49:28 main.go:243: info [platform=========================== 接入控制 网络接入控制系统 <nil>]
+
+2016/01/04 13:49:28 main.go:243: info [platform=========================== 打印审计 中孚打印安全监控与审计系统 <nil>]
+
+2016/01/04 13:49:28 main.go:243: info [platform=========================== 违规外联 中孚违规外联互联网监控平台 <nil>]
+
+2016/01/04 13:49:28 main.go:243: info [platform=========================== 主机检查 中孚计算机终端保密检查系统 <nil>]
+
+2016/01/04 13:49:28 main.go:243: info [platform=========================== 主机审计 主机监控与审计系统 <nil>]
+
+2016/01/04 13:49:28 main.go:243: info [platform=========================== 介质管理 USB移动存储介质使用管理系统 <nil>]
+
+2016/01/04 13:49:28 main.go:243: info [platform=========================== 主机审计 中孚介质管理(公安) <nil>]
+
+2016/01/04 13:49:28 main.go:243: info [platform=========================== 三合一 涉密计算机及移动存储介质保密管理系统 <nil>]
+
+2016/01/04 13:49:28 main.go:243: info [platform=========================== 光盘刻录 光盘刻录监控与审计系统 <nil>]
+
+2016/01/04 13:49:28 main.go:243: info [platform=========================== 互联网监控 山东中孚互联网监控系统 <nil>]
+
+2016/01/04 13:49:28 main.go:243: info [platform=========================== 敏感信息 敏感信息实时监管系统 <nil>]

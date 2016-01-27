@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+    <log filename='t_internetviolate_log' remark='涉密优盘使用日志' runmodel='repeatetimer' isvaldata='false' >
+        <CheckColumnSQL>select name from syscolumns where id=object_id('t_internetviolateLog') and name='isreported_3in1'</CheckColumnSQL>
+		<AlterSQL>alter table t_internetviolateLog  add isreported_3in1 int default 0</AlterSQL>
+		<UpdateFlagSQL>update t_internetviolateLog set isreported_3in1=0 where isreported_3in1 is null</UpdateFlagSQL>
+		<CheckRowSQL>
+			<![CDATA[ 
+				select rows as rowcnt
+					from sysindexes i
+					inner join sysobjects o
+					on (o.id = i.id and o.xtype='U')
+					where indid <2 and OBJECT_NAME(i.id)='t_internetviolateLog'
+				]]>
+		</CheckRowSQL>
+		<UpdateOperSQL></UpdateOperSQL>
+		<DeleteByIDSQL></DeleteByIDSQL>
+		<DataSQL>
+			<![CDATA[ 
+			select CONVERT(varchar(100),a.guid) as id,HostName,EmpName,DeptName,MacAddress,HardDiskInfo,
+			CONVERT(varchar,violateTime,120) as violateTime,NetIP,Description, CONVERT(varchar,GETDATE(),120) as impdate
+				from dbo.T_InternetViolateLog a left join v_hostinfo b on a.HostCode=b.HostCode
+			where a.isreported_3in1='0'		
+			]]>
+        </DataSQL>
+		<InsertSQL>insert into t_internetviolateLog(id,hostname,empname,deptname,macaddress,harddiskinfo,violatetime,netip,description,impdate,sub_sysid,sub_sysname)values(?,?,?,?,?,?,?,?,?,?,?,?)</InsertSQL>
+   	    <SuccessSQL>update t_internetviolateLog  set isreported_3in1=1 where guid in(@[id]) and isreported_3in1=0</SuccessSQL>
+ 	</log>

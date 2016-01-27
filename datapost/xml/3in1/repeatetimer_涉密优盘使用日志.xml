@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+    <log filename='safetydisk_use_log' remark='涉密优盘使用日志' runmodel='repeatetimer' isvaldata='false' >
+        <CheckColumnSQL>select name from syscolumns where id=object_id('T_UDiskLog') and name='isreported'</CheckColumnSQL>
+		<AlterSQL>alter table T_UDiskLog  add isreported int default 0</AlterSQL>
+		<UpdateFlagSQL>update T_UDiskLog set isreported=0 where isreported is null</UpdateFlagSQL>
+		<CheckRowSQL>
+			<![CDATA[ 
+				select rows as rowcnt
+					from sysindexes i
+					inner join sysobjects o
+					on (o.id = i.id and o.xtype='U')
+					where indid <2 and OBJECT_NAME(i.id)='T_UDiskLog'
+				]]>
+		</CheckRowSQL>
+		<UpdateOperSQL></UpdateOperSQL>
+		<DeleteByIDSQL></DeleteByIDSQL>
+		<DataSQL>
+			<![CDATA[ 
+                     select actionid,year_info,month_info,year_month_info,disksn,diskmodel,hostip,hostname,unitname,deptname,username,disk_username,actiontype,actiondate,ProducerID,remark,impdate 
+				from (
+					SELECT
+						a.guid AS actionid,
+						year(a.opTime)AS year_info, 
+						month(a.opTime)AS month_info, 
+						LEFT(CONVERT(varchar,a.opTime,120),7) AS year_month_info,
+						a.disksn as disksn,
+						(case
+						when a.opType>=0 and a.opType<=2 then cast(a.opType AS varchar(10))
+						when a.opType>=3 then '3-2'
+						when a.opType>=5 and a.opType<=8 then '3-1'
+						when a.opType=16 or a.opType=12 or (a.opType>=19 and a.opType<=25) then'3-3' end) AS actiontype,
+						a.UnitName AS unitname,
+						ISNULL(b.fullname, a.DeptName) AS deptname,
+						a.EmpName AS disk_username,
+						a.Company AS producerid,
+						a.TypeCode AS diskmodel,
+						CONVERT(varchar,a.opTime,120) AS actiondate,
+						e.[Value] AS remark,
+						d.hostname AS hostname,
+						d.hostip AS hostip,
+						d.EmpName AS username,
+						CONVERT(varchar,GETDATE(),120) as impdate
+					FROM dbo.T_UDiskLog AS a LEFT OUTER JOIN
+						dbo.V_FlashDisk AS b ON a.disksn = b.DiskCode LEFT OUTER JOIN
+						dbo.V_HostInfo AS d ON a.HostCode = d.HostCode LEFT OUTER JOIN
+						dbo.T_KeyValue AS e ON a.opType = e.KeyCode AND e.KeyType = 9 
+						where a.IsReported=0 and a.optype<>9 and a.optype<>10 and a.optype<>17
+						and a.optype<>18
+					)a
+			]]>
+        </DataSQL>
+		<InsertSQL>insert into tb_safetydisk_use_log(actionid,year_info,month_info,year_month_info,disksn,diskmodel,hostip,hostname,unitname,deptname,username,disk_username,actiontype,actiondate,ProducerID,remark,impdate,sub_sysid,sub_sysname)values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)</InsertSQL>
+   	    <SuccessSQL>update T_UDiskLog  set IsReported=1 where guid in(@[id]) and IsReported=0</SuccessSQL>
+ 	</log>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+    <log filename='tb_seclogon_key_info' remark='Key基本信息' runmodel='singletimer' isvaldata='true' >
+        <CheckColumnSQL></CheckColumnSQL>
+		<AlterSQL></AlterSQL>
+		<UpdateFlagSQL></UpdateFlagSQL>
+		<CheckRowSQL></CheckRowSQL>
+		
+		<UpdateOperSQL>update tb_seclogon_key set oper_flag='d' where sub_sysid='1201'</UpdateOperSQL>
+		<DeleteByIDSQL>delete from tb_seclogon_key where key_sn=?</DeleteByIDSQL>
+		
+		<DataSQL>
+		<![CDATA[ 
+         select 	
+			key_sn, 
+			remark, 
+			(case IFNULL(create_time,'0000-00-00') when  '' then '0000-00-00' else IFNULL(create_time,'0000-00-00') end) as create_time,
+			now() as impdate
+		from 
+		tb_seclogon_key 
+		]]>
+        </DataSQL>
+		<InsertSQL>insert into tb_seclogon_key(key_sn,remark,create_time,impdate,sub_sysid,sub_sysname)values(?,?,?,?,?,?)</InsertSQL>
+   	    <SuccessSQL></SuccessSQL>
+ 	</log>

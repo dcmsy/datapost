@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+    <log filename='print_log' remark='打印日志' runmodel='repeatetimer' isvaldata='false' >
+        <CheckColumnSQL>select name from syscolumns where id=object_id('T_AfterAuditingPrintLog') and name='isreported'</CheckColumnSQL>
+		<AlterSQL>alter table T_AfterAuditingPrintLog  add isreported int default 0</AlterSQL>
+		<UpdateFlagSQL>update T_AfterAuditingPrintLog set isreported=0 where isreported is null</UpdateFlagSQL>
+		<CheckRowSQL>
+			<![CDATA[ 
+				select rows as rowcnt
+					from sysindexes i
+					inner join sysobjects o
+					on (o.id = i.id and o.xtype='U')
+					where indid <2 and OBJECT_NAME(i.id)='T_AfterAuditingPrintLog'
+				]]>
+		</CheckRowSQL>
+		<UpdateOperSQL></UpdateOperSQL>
+		<DeleteByIDSQL></DeleteByIDSQL>
+		<DataSQL>
+			<![CDATA[ 
+			select
+				id,year_info, month_info, year_month_info,hostname,filename,beginDate,printername,isviolation,pagenum,issensitivityname,issensitivity,
+				issidename,isside,copies,sensitivitycontent,dirdocname,delcopies,enddelcopies,direction,iscallbackname,iscallback,excuse,
+				auditname,accname,hostip,username,printstatename,printstate,seclevelname,seclevel,deptname,impdate
+				from (
+				SELECT 
+						CONVERT(varchar(100),printnum) AS id ,
+						year(startprinttime)AS year_info, 
+						month(startprinttime)AS month_info, 
+						LEFT(CONVERT(varchar,startprinttime,120),7) AS year_month_info,
+						[ComputerName] AS hostname,
+						[DocName]  as filename,
+						CONVERT(varchar,[StartPrintTime],120) as beginDate,
+						[PrinterName] as printername,
+						'合规' as isviolation,
+						[PageNum] as pagenum,
+						(CASE IsSensitivity WHEN 0 THEN '否' WHEN 1 THEN ' 是' END) AS issensitivityname,
+						(CASE IsSensitivity WHEN 0 THEN '0' WHEN 1 THEN ' 1' END) AS issensitivity,
+						(CASE side WHEN 0 THEN '单面' WHEN 1 THEN ' 双面' END) as issidename,
+						(CASE side WHEN 0 THEN '0' WHEN 1 THEN ' 1' END) as isside,
+						[ShareNum] as copies,
+						[SensitivityContent] as sensitivitycontent,
+						[DirDocName] as dirdocname,
+						[DelShareNum] as delcopies,
+						[endDelShareNum] as enddelcopies,
+						[Direction] as direction,
+						(CASE [DelStatus] WHEN '未销毁' THEN '否' else '是' END) as  iscallbackname,
+						(CASE [DelStatus] WHEN '未销毁' THEN '0' else '1' END) as  iscallback,
+						[Excuse] as excuse,
+						[Auditor] as auditname,
+						[Examineor] as accname,
+						a.[HostIP] as hostip,
+						b.EmpName as username,
+						(CASE [state] WHEN '打印成功' THEN '成功' WHEN '打印失败' THEN '失败' END) as printstatename,
+						(CASE [state] WHEN '打印成功' THEN '1' WHEN '打印失败' THEN '0' END) as printstate,
+						d.Name as seclevelname,
+						(CASE d.Name WHEN '绝密' THEN '0' WHEN '机密' THEN '1' WHEN '秘密' THEN '2' WHEN '内部' THEN '3' WHEN '公开' THEN '4' else '99' END) as seclevel,
+						dept.DeptName as deptname,
+						CONVERT(varchar,GETDATE(),120) as impdate
+				FROM T_AfterAuditingPrintLog a
+				            INNER JOIN T_Employee b ON a.EmpID = b.EmpID
+					    INNER JOIN T_Department dept ON dept.deptcode = a.deptcode
+				            INNER JOIN T_PrintState c  ON a.StateNum = c.Num
+				            INNER JOIN T_SecretStatus d ON a.Compression =d.Id
+				            where IsReported=0 and dept.DeptName is not null and dept.DeptName !='' and dept.DeptName != 'N/A'
+				)a	
+			]]>
+        </DataSQL>
+		<InsertSQL>insert into tb_print_log(
+id,year_info, month_info, year_month_info,hostname,filename,beginDate,printername,isviolation,pagenum,issensitivityname,issensitivity,
+issidename,isside,copies,sensitivitycontent,dirdocname,delcopies,enddelcopies,direction,iscallbackname,iscallback,excuse,
+auditname,accname,hostip,username,printstatename,printstate,seclevelname,seclevel,deptname,impdate,sub_sysid,sub_sysname)
+values(?,?, ?, ?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)</InsertSQL>
+   	    <SuccessSQL>update T_AfterAuditingPrintLog  set IsReported=1 where PrintNum in(@[id]) and IsReported=0</SuccessSQL>
+ 	</log>

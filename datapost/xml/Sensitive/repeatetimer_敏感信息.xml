@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+    <log filename='sensitive_info' remark='敏感信息监控' runmodel='repeatetimer' isvaldata='false' >
+        <CheckColumnSQL>select COLUMN_NAME from information_schema.COLUMNS where TABLE_SCHEMA='@[dbname]' and TABLE_NAME='mg_chart' and COLUMN_NAME='isReport'</CheckColumnSQL>
+		<AlterSQL>alter table mg_chart  add isReport int default 0</AlterSQL>
+		<UpdateFlagSQL>update mg_chart set isReport=0 where isReport is null</UpdateFlagSQL>
+		<CheckRowSQL>select TABLE_ROWS from information_schema.TABLES  where TABLE_SCHEMA='@[dbname]' and TABLE_NAME='mg_chart'</CheckRowSQL>
+		<UpdateOperSQL></UpdateOperSQL>
+		<DeleteByIDSQL></DeleteByIDSQL>		
+		<DataSQL>
+			select 	id,
+				DATE_FORMAT((case entrystamp when '0000-00-00 00:00:00' then '0000-00-00' else entrystamp end) ,'%Y') as year_info,
+				DATE_FORMAT((case entrystamp when '0000-00-00 00:00:00' then '0000-00-00' else entrystamp end) ,'%m') as month_info,
+				DATE_FORMAT((case entrystamp when '0000-00-00 00:00:00' then '0000-00-00' else entrystamp end) ,'%Y-%m') as year_month_info,
+				filecode,
+				name,
+				summary,
+				keyword,
+				srclocation as srclocation,
+				destlocation as destlocation,
+				action as action,
+				(case action when '0'	then '未知操作'
+					when '1'	then '重命名文件'
+					when '2'	then '剪切文件'
+					when '3'	then '删除到回收站'
+					when '4'	then '从回收站恢复'
+					when '5'	then 'WIN7下文件删除'
+					when '6'	then '彻底删除'
+					when '7'	then '复制文件'
+					when '8'	then '本地扫描'
+					when '9'	then '创建文件'
+					when '99'	then '其他'
+					when '10'	then 'QQ的web邮件'
+					when '11'	then 'QQ离线发送'
+					when '12'	then 'QQ微云'
+					when '13'	then 'QQ在线传输'
+					when '14'	then '其他未知的网络行为'
+					when '15'	then '文件打开'
+					when '16'	then '普通web邮件发送'
+					when '17'	then '本地拷贝到移动介质'
+					when '18'	then '移动介质拷贝到本地'
+					when '19'	then '移动介质拷贝到移动介质'
+					when '20'	then '本地剪切到移动介质'
+					when '21'	then '移动介质剪切到本地'
+					when '22'	then '移动介质剪切到移动介质'
+					when '23'	then '飞秋传送'
+					when '24'	then '文件打印'
+					when '25'	then 'SMTP邮件'
+					when '26'	then 'POP3邮件'
+					when '27'	then '通过QQ下载'
+					when '28'	then '通过QQ上传'
+				else '' end  ) as actionname,
+				feature,
+				hdid as hdid,
+				hostip as hostip,
+				mac as mac,
+				'' as computerlocation,
+				computername as computername,
+				username,
+				authname,
+			    (case entrystamp when '0000-00-00 00:00:00' then '0000-00-00' else entrystamp end) AS entrystamp,
+			    (case dealdate when '0000-00-00 00:00:00' then '0000-00-00' else dealdate end) AS dealdate,
+			    orgpath as deptname,
+				mglevel, 
+				mglevelname,
+				now() as impdate
+				from 
+			mg_chart  d where isReport=0
+		limit 10000
+        </DataSQL>
+		<InsertSQL>insert into tb_mg_sensitive_info(id,year_info,month_info,year_month_info,filecode,name,summary,keyword,srclocation,destlocation,action,actionname,feature,hdid,hostip,mac,computerlocation,computername,username,authname,entrystamp,dealdate,deptname,mglevel,mglevelname,impdate,sub_sysid,sub_sysname)values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)</InsertSQL>
+   	    <SuccessSQL>update mg_chart set isReport=1 where id in (@[id]) </SuccessSQL>
+ 	</log>

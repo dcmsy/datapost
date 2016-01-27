@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+    <log filename='nac_node_check' remark='终端检查结果' runmodel='repeatetimer' isvaldata='false' >
+        <CheckColumnSQL>select COLUMN_NAME from information_schema.COLUMNS where TABLE_SCHEMA='@[dbname]' and TABLE_NAME='a_check_result' and COLUMN_NAME='IsReported'</CheckColumnSQL>
+		<AlterSQL>alter table a_check_result  add IsReported int default 0</AlterSQL>
+		<UpdateFlagSQL>update a_check_result set IsReported=0 where IsReported is null</UpdateFlagSQL>
+		<CheckRowSQL>select TABLE_ROWS from information_schema.TABLES  where TABLE_SCHEMA='@[dbname]' and TABLE_NAME='a_check_result'</CheckRowSQL>
+		<UpdateOperSQL></UpdateOperSQL>
+		<DeleteByIDSQL></DeleteByIDSQL>
+		<DataSQL>
+		select
+		checkid,year_info,month_info,year_month_info,mac,computer,username,checkdate,checkpolicyname,checkitemname,itemresultname,resultname,iskeyitemname,checkitem,itemresult,result,iskeyitem,remark,deptname,impdate
+		from 
+		(
+		SELECT 
+			b.id as checkid,
+			DATE_FORMAT((case b.check_date when '0000-00-00 00:00:00' then '0000-00-00' else b.check_date end),'%Y') as year_info,
+			DATE_FORMAT((case b.check_date when '0000-00-00 00:00:00' then '0000-00-00' else b.check_date end),'%m') as month_info,
+			DATE_FORMAT((case b.check_date when '0000-00-00 00:00:00' then '0000-00-00' else b.check_date end),'%Y-%m') as year_month_info,
+			b.mac,
+			c.computername as computer,
+			u.name AS username,
+			(case b.check_date when '0000-00-00 00:00:00' then '0000-00-00' else b.check_date end) AS checkdate,
+			b.checkpolicyname AS checkpolicyname,
+			(CASE WHEN a.check_item = 'antivirus' THEN '杀毒软件检查'
+			      WHEN a.check_item = 'share' THEN '共享目录检查'
+			      WHEN a.check_item = 'checkprocess' THEN '禁止运行进程'
+			      WHEN a.check_item = 'must_installed' THEN '必须安装软件'
+			      WHEN a.check_item = 'ban_installed' THEN '禁止安装软件'
+			      WHEN a.check_item = 'screensave' THEN '屏幕保护检查'
+			      WHEN a.check_item = 'remotedesktop' THEN '远程桌面检查'
+			      WHEN a.check_item = 'port' THEN '网络端口检查'
+			      WHEN a.check_item = 'disk' THEN '磁盘使用检查'
+			      WHEN a.check_item = 'service' THEN '系统服务检查'
+			      WHEN a.check_item = 'must_process' THEN '必须运行进程'  
+			      WHEN a.check_item = 'must_service' THEN '必须运行服务'
+
+			      WHEN a.check_item = 'patch' THEN '补丁检查'
+			      WHEN a.check_item = 'net_force' THEN '网络强制检查'
+				  WHEN a.check_item = 'sys_policy' THEN '系统安全检查'
+				  WHEN a.check_item = 'ban_os_ver' THEN '禁用操作系统检查'
+				  WHEN a.check_item = 'dhcpcheck' THEN 'DHCP检查'
+				  WHEN a.check_item = 'adautocheck' THEN 'Windows AD域用户登录检查'
+				else '其他'
+			      END) AS checkitemname,
+			 	(CASE WHEN a.is_ok = 0 THEN '不通过' ELSE '通过' END) AS itemresultname,
+			 	(CASE WHEN b.is_ok = 0 THEN '不通过' WHEN b.is_ok = 1 THEN '通过' ELSE '警告' END) AS resultname,
+			 	(CASE WHEN a.is_key = 0 THEN '否' ELSE '是' END) AS iskeyitemname,
+			 	(CASE WHEN a.check_item = 'antivirus' THEN '01'
+			      WHEN a.check_item = 'share' THEN '02'
+			      WHEN a.check_item = 'checkprocess' THEN '03'
+			      WHEN a.check_item = 'must_installed' THEN '04'
+			      WHEN a.check_item = 'ban_installed' THEN '05'
+			      WHEN a.check_item = 'screensave' THEN '06'
+			      WHEN a.check_item = 'remotedesktop' THEN '07'
+			      WHEN a.check_item = 'port' THEN '08'
+			      WHEN a.check_item = 'disk' THEN '09'
+			      WHEN a.check_item = 'service' THEN '10'
+			      WHEN a.check_item = 'must_process' THEN '11'  
+			      WHEN a.check_item = 'must_service' THEN '12'
+			      WHEN a.check_item = 'patch' THEN '13'
+			      WHEN a.check_item = 'net_force' THEN '14'
+				  WHEN a.check_item = 'sys_policy' THEN '15'
+				  WHEN a.check_item = 'ban_os_ver' THEN '16'
+				  WHEN a.check_item = 'dhcpcheck' THEN '17'
+				  WHEN a.check_item = 'adautocheck' THEN '18'
+
+				  else '99'
+			      END) AS checkitem,
+			 	(CASE WHEN a.is_ok = 0 THEN '0' ELSE '1' END) AS itemresult,
+			 	(CASE WHEN b.is_ok = 0 THEN '0' WHEN b.is_ok = 1 THEN '1' ELSE '2' END) AS result,
+			 	(CASE WHEN a.is_key = 0 THEN '0' ELSE '1' END) AS iskeyitem,
+		
+			a.check_result AS remark,
+			 d.NAME AS deptname,
+			now() as impdate
+			FROM (select b.* from a_check_result b where b.IsReported=0  limit 200) b
+		        LEFT JOIN a_check_result_detail a on a.check_id = b.id
+			LEFT JOIN node c ON b.mac = c.mac
+			LEFT JOIN a_user u ON u.id = c.a_owner
+			LEFT JOIN a_dept d on d.id = c.a_deptid
+			WHERE  b.id IS NOT NULL
+			ORDER BY b.check_date ASC,b.id
+		)a
+        </DataSQL>
+		<InsertSQL>insert into tb_nac_node_check (checkid,year_info,month_info,year_month_info,mac,computer,username,checkdate,checkpolicyname,checkitemname,itemresultname,resultname,iskeyitemname,checkitem,itemresult,result,iskeyitem,remark,deptname,impdate,sub_sysid, sub_sysname)values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)</InsertSQL>
+   	    <SuccessSQL>update a_check_result  set IsReported=1 where id in(@[id]) and IsReported=0</SuccessSQL>
+ 	</log>

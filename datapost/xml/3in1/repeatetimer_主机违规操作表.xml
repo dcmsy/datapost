@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+    <log filename='host_violation' remark='主机违规日志' runmodel='repeatetimer' isvaldata='false' >
+        <CheckColumnSQL>select name from syscolumns where id=object_id('T_OperationViolateLog') and name='isreported'</CheckColumnSQL>
+		<AlterSQL>alter table T_OperationViolateLog  add isreported int default 0</AlterSQL>
+		<UpdateFlagSQL>update T_OperationViolateLog set isreported=0 where isreported is null</UpdateFlagSQL>
+		<CheckRowSQL>
+			<![CDATA[ 
+				select rows as rowcnt
+					from sysindexes i
+					inner join sysobjects o
+					on (o.id = i.id and o.xtype='U')
+					where indid <2 and OBJECT_NAME(i.id)='T_OperationViolateLog'
+				]]>
+		</CheckRowSQL>
+		<UpdateOperSQL></UpdateOperSQL>
+		<DeleteByIDSQL></DeleteByIDSQL>
+		<DataSQL>
+			<![CDATA[ 
+				select 
+					id,year_info,month_info,year_month_info,audittypename,audittype,hostname,hostip,mac,hdid,username,deptname,recorddate,remark,impdate 
+				 from (
+					select CONVERT(varchar(100),a.guid) as id,
+					year(a.opertime)AS year_info, 
+					month(a.opertime)AS month_info, 
+					LEFT(CONVERT(varchar,a.opertime,120),7) AS year_month_info,
+					(case a.description 
+					when '发现安装了多个操作系统'  then  '主机配置'
+					when '发现安装了虚拟机'  then  '使用禁止设备'
+					when '发现试图卸载用户端'  then  '违规卸载'
+					else '安装目录' end) as audittypename,
+					(case a.description 
+					when '发现安装了多个操作系统'  then  '2'
+					when '发现安装了虚拟机'  then  '12'
+					when '发现试图卸载用户端'  then  '9'
+					else '8' end) as audittype,
+					c.hostname as hostname,
+					c.hostip ,
+					c.macaddress as mac,
+					c.harddiskinfo as hdid,
+					c.empname as username,
+					c.fullname as deptname,
+					CONVERT(varchar,a.opertime,120) as recorddate,
+					a.description as remark,
+					CONVERT(varchar,GETDATE(),120) as impdate
+					from T_OperationViolateLog a 
+					inner join V_HostInfo c on a.hostcode=c.hostcode
+					where isreported=0 and a.description in ('发现安装了多个操作系统','发现安装了虚拟机','发现试图卸载用户端')
+				)a
+			]]>
+        </DataSQL>
+		<InsertSQL>insert into tb_hostaudit_illegal(id,year_info,month_info,year_month_info,audittypename,audittype,hostname,hostip,mac,hdid,username,deptname,recorddate,remark,impdate,sub_sysid,sub_sysname)values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)</InsertSQL>
+   	    <SuccessSQL>update T_OperationViolateLog set isreported=1 where guid in(@[id]) and isreported=0</SuccessSQL>
+ 	</log>

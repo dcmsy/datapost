@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+    <log filename='safelogin_log' remark='安全登录日志' runmodel='repeatetimer' isvaldata='false' >		
+        <CheckColumnSQL>select COLUMN_NAME from information_schema.COLUMNS where TABLE_SCHEMA='@[dbname]' and TABLE_NAME='tb_log_authlogon' and COLUMN_NAME='isreported'</CheckColumnSQL>
+		<AlterSQL>alter table tb_log_authlogon  add isreported int default 0</AlterSQL>
+		<UpdateFlagSQL>update tb_log_authlogon set isreported=0 where isreported is null</UpdateFlagSQL>
+		<CheckRowSQL>select TABLE_ROWS from information_schema.TABLES  where TABLE_SCHEMA='@[dbname]' and TABLE_NAME='tb_log_authlogon'</CheckRowSQL>
+		<UpdateOperSQL></UpdateOperSQL>
+		<DeleteByIDSQL></DeleteByIDSQL>	
+		
+		<DataSQL>
+			<![CDATA[ 
+			select id,key_num as key_info,action_type as op_type,IFNULL(date_time,'0000-00-00 00:00:00') as op_time,host_name,dept_name,user_name,user_name as logon_user,host_ip,host_id,now() as impdata 
+			from (
+				select l.id,l.key_num,l.action_type,l.date_time,l.host_name,l.dept_name,l.user_name,l.logon_num,h.ip host_ip,l.host_id 
+				from tb_log_authlogon l,tb_host h 
+				where h.id=l.host_id and l.IsReported='0'
+			)a
+			]]>
+        </DataSQL>
+		<InsertSQL>insert into tb_safelogin_key_event(id,key_info,op_type,op_time,host_name,dept_name,user_name,logon_user,host_ip,host_id,impdate,sub_sysid,sub_sysname)values(?,?,?,?,?,?,?,?,?,?,?,?,?)</InsertSQL>
+   	    <SuccessSQL>update tb_log_authlogon  set isreported=1 where id in(@[id]) and isreported='0'</SuccessSQL>
+ 	</log>

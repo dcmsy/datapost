@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+    <!-- 以下根据需要可对数据进行加密 -->
+    <log filename='safetydisk_use_log' remark='自评估总分' runmodel='repeatetimer' isvaldata='false' >
+        <CheckColumnSQL>select name from syscolumns where id=object_id('tb_assessment_list') and name='isreported'</CheckColumnSQL>
+		<AlterSQL>alter table tb_assessment_list  add isreported int default 0</AlterSQL>
+		<UpdateFlagSQL>update tb_assessment_list set isreported=0 where isreported is null</UpdateFlagSQL>
+		<CheckRowSQL>
+			<![CDATA[ 
+				select TABLE_ROWS 
+				from information_schema.TABLES  
+				where TABLE_SCHEMA='@[dbname]' and TABLE_NAME='tb_assessment_list'
+				]]>
+		</CheckRowSQL>
+		<UpdateOperSQL></UpdateOperSQL>
+		<DeleteByIDSQL></DeleteByIDSQL>
+		<DataSQL>
+			<![CDATA[ 
+               select batchno,deptname,jsscore,glscore,taskno,now() as impdate
+				from (		
+					SELECT batchno,deptname,IFNULL(jsscore,0)as jsscore,IFNULL(glscore,0)as glscore ,taskno,now() as impdate 
+					FROM tb_assessment_list a inner join tb_chkself_task b on a.taskno=b.taskid  WHERE tasktype=0 AND taskstatus=1 AND a.isreported=0
+			   )a
+			]]>
+        </DataSQL>
+		<InsertSQL>insert into tb_fxpg_assessment_list(batchno,deptname,jsscore,glscore,taskno,impdate,sub_sysid,sub_sysname)values(?,?,?,?,?,?,?,?)</InsertSQL>
+   	    <SuccessSQL>update tb_assessment_list  set isreported=1 where batchno in(@[id]) and isreported=0</SuccessSQL>
+ 	</log>

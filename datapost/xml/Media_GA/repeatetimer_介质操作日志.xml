@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+    <log filename='ga_media_log' remark='介质操作日志' runmodel='repeatetimer' isvaldata='false' >
+        <CheckColumnSQL>select COLUMN_NAME from information_schema.COLUMNS where TABLE_SCHEMA='@[dbname]' and TABLE_NAME='tb_gab_mediainfo_log' and COLUMN_NAME='IsReported'</CheckColumnSQL>
+		<AlterSQL>alter table tb_gab_mediainfo_log  add IsReported int default 0</AlterSQL>
+		<UpdateFlagSQL>update tb_gab_mediainfo_log set IsReported=0 where IsReported is null</UpdateFlagSQL>
+		<CheckRowSQL>select TABLE_ROWS from information_schema.TABLES  where TABLE_SCHEMA='@[dbname]' and TABLE_NAME='tb_gab_mediainfo_log'</CheckRowSQL>
+		<UpdateOperSQL></UpdateOperSQL>
+		<DeleteByIDSQL></DeleteByIDSQL>
+		<DataSQL>
+select 
+
+id ,year_info,month_info,year_month_info,mediaid,username,deptname,typename,statename,logtypename, srcpath,destpath, hdid,computername,computerusername,hostip,mac,filesize,file_create_time,file_modify_time,
+inside_lan,sn,factoryname,createdate,log_version,reserve,impdate 
+from 
+(
+select 	l.id ,
+	DATE_FORMAT((case IFNULL(l.log_time,'0000-00-00') when  '' then '0000-00-00' else IFNULL(l.log_time,'0000-00-00') end) ,'%Y') as year_info,
+	DATE_FORMAT((case IFNULL(l.log_time,'0000-00-00') when  '' then '0000-00-00' else IFNULL(l.log_time,'0000-00-00') end) ,'%m') as month_info,
+	DATE_FORMAT((case IFNULL(l.log_time,'0000-00-00') when  '' then '0000-00-00' else IFNULL(l.log_time,'0000-00-00') end) ,'%Y-%m') as year_month_info,
+	m.id as mediaid,
+	m.user_name as username,
+	(case IFNULL( m.dept_name,'') when  null then '未知' when '' then '未知' else m.dept_name end) as deptname,
+	(case m.type when  1 then '双向交换盘' when 3 then '单向导入盘' when 5 then '内网专用盘' end) as typename,
+	(case m.state when 1 then '正常'       when 2 then '已注销'     when 3 then '已强制注销' end) as statename,
+        (case l.opt_type
+		when 801 then '拷贝文件/目录'
+		when 802 then '新建文件/目录'
+		when 803 then '删除文件/目录'
+		when 804 then '为文件/目录改名'
+		when 805 then '格式化数据区'
+	end) as logtypename,
+	l.src_path as srcpath,
+	l.dest_path as destpath,
+	l.hd_sn as hdid,
+	l.computer_name as computername,
+	l.computer_user as computerusername,
+	l.ip as hostip,
+	l.mac,
+	l.file_size as filesize,
+	(case IFNULL(l.file_create_time,'0000-00-00') when  '' then '0000-00-00' else IFNULL(l.file_create_time,'0000-00-00') end)  as file_create_time,
+	(case IFNULL(l.file_modify_time,'0000-00-00') when  '' then '0000-00-00' else IFNULL(l.file_modify_time,'0000-00-00') end)  as file_modify_time,
+	l.inside_lan as inside_lan,
+	l.lan_sign as lan_sign,
+	l.media_sn as sn,
+	l.factory_name as factoryname,
+	(case IFNULL(l.log_time,'0000-00-00') when  '' then '0000-00-00' else IFNULL(l.log_time,'0000-00-00') end) as createdate,
+	l.log_version as log_version,
+	l.reserve as reserve,
+	now() as impdate
+	from
+	tb_gab_mediainfo_log l
+    left join tb_gab_mediainfo m on m.sn = l.media_sn
+		where l.IsReported=0
+		limit 10000
+)a
+        </DataSQL>
+		<InsertSQL>insert into tb_ga_mediainfo_log (id ,year_info,month_info,year_month_info,mediaid,username,deptname,typename,statename,logtypename, srcpath,destpath, hdid,computername,computerusername,hostip,mac,filesize,file_create_time,file_modify_time,inside_lan,sn,factoryname,createdate,log_version,reserve,impdate,sub_sysid,sub_sysname)values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)</InsertSQL>
+   	    <SuccessSQL>update tb_gab_mediainfo_log  set IsReported=1 where id in(@[logid]) and IsReported=0</SuccessSQL>
+ 	</log>

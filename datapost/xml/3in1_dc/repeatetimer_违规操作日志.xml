@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+    <log filename='t_operationviolate_log' remark='违规操作日志' runmodel='repeatetimer' isvaldata='false' >
+        <CheckColumnSQL>select name from syscolumns where id=object_id('T_OperationViolateLog') and name='isreported_3in1'</CheckColumnSQL>
+		<AlterSQL>alter table T_OperationViolateLog  add isreported_3in1 int default 0</AlterSQL>
+		<UpdateFlagSQL>update T_OperationViolateLog  set isreported_3in1=0 where isreported_3in1 is null</UpdateFlagSQL>
+		<CheckRowSQL>
+			<![CDATA[ 
+				select rows as rowcnt
+					from sysindexes i
+					inner join sysobjects o
+					on (o.id = i.id and o.xtype='U')
+					where indid <2 and OBJECT_NAME(i.id)='T_OperationViolateLog'
+				]]>
+		</CheckRowSQL>
+		<UpdateOperSQL></UpdateOperSQL>
+		<DeleteByIDSQL></DeleteByIDSQL>
+		<DataSQL>
+			<![CDATA[ 
+ select CONVERT(varchar(100),a.guid) as id,hostname,empname,deptname,hostip,macaddress,
+ CONVERT(varchar,opertime,120) as opertime,description,CONVERT(varchar,GETDATE(),120) as impdate 
+	from dbo.T_OperationViolateLog a  
+	left join v_hostinfo b on a.HostCode=b.HostCode
+ where a.isreported_3in1='0'
+			]]>
+        </DataSQL>
+		<InsertSQL>insert into T_OperationViolateLog(id,hostname,empname,deptname,hostip,macaddress,opertime,description,impdate,sub_sysid,sub_sysname)values(?,?,?,?,?,?,?,?,?,?,?)</InsertSQL>
+   	    <SuccessSQL>update T_OperationViolateLog  set isreported_3in1=1 where guid in(@[id]) and isreported_3in1=0</SuccessSQL>
+ 	</log>

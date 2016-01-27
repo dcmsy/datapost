@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+    <log filename='safetydisk_info' remark='涉密优盘基本信息' runmodel='singletimer' isvaldata='true' >
+        <CheckColumnSQL></CheckColumnSQL>
+		<AlterSQL></AlterSQL>
+		<UpdateFlagSQL></UpdateFlagSQL>
+		<CheckRowSQL></CheckRowSQL>
+		<UpdateOperSQL>update tb_safetydisk_info set oper_flag='d' where sub_sysid='0501'</UpdateOperSQL>
+		<DeleteByIDSQL>delete from tb_safetydisk_info where disksn=?</DeleteByIDSQL>
+		<DataSQL>
+         	select 
+				disksn, 
+				year_info, 
+				month_info, 
+				year_month_info, 
+				scope, 
+				diskstate, 
+				unitname, 
+				deptname, 
+				username, 
+				producerid, 
+				regdate, 
+				unregdate, 
+				impdate 
+			from (
+				
+				select diskcode as disksn,
+				year(regtime)AS year_info, 
+				month(regtime)AS month_info, 
+				LEFT(CONVERT(varchar,regtime,120),7) AS year_month_info,
+				(case usedrange when '0' then '0' when '1' then '1' when '2' then '2' when '3' then '3' else  '1' end)  as scope,
+				status as diskstate,
+				fullname as deptname,
+				empname as username,
+				'' as unitname,
+				company as producerid,
+				convert(char(10),regtime,120) as regdate,
+				'0000-00-00 00:00:00' as unregdate,
+				CONVERT(varchar,GETDATE(),120) as impdate
+				from V_FlashDisk
+			)a
+        </DataSQL>
+		<InsertSQL>insert into tb_safetydisk_info(disksn,year_info,month_info,year_month_info,scope,diskstate,unitname,deptname,username,producerid,regdate,unregdate,impdate,sub_sysid,sub_sysname)values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)</InsertSQL>
+   	    <SuccessSQL></SuccessSQL>
+ 	</log>

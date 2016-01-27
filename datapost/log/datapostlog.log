@@ -1,0 +1,128 @@
+
+2016/01/26 09:02:57 datapost_file.go:75: info [desIniFile: config/config.ini 已存在]
+
+2016/01/26 09:02:57 datapost_file.go:75: info [desIniFile: xml\3in1/3in1.ini 已存在]
+
+2016/01/26 09:02:57 datapost_file.go:75: info [desIniFile: xml\3in1_dc/3in1_dc.ini 已存在]
+
+2016/01/26 09:02:57 datapost_file.go:75: info [desIniFile: xml\CDBurn/CDBurn.ini 已存在]
+
+2016/01/26 09:02:57 datapost_file.go:75: info [desIniFile: xml\Chk/Chk.ini 已存在]
+
+2016/01/26 09:02:57 datapost_file.go:75: info [desIniFile: xml\ChkSelf/ChkSelf.ini 已存在]
+
+2016/01/26 09:02:57 datapost_file.go:75: info [desIniFile: xml\Dd/Dd.ini 已存在]
+
+2016/01/26 09:02:57 datapost_file.go:75: info [desIniFile: xml\HostAudit/HostAudit.ini 已存在]
+
+2016/01/26 09:02:57 datapost_file.go:75: info [desIniFile: xml\Login/Login.ini 已存在]
+
+2016/01/26 09:02:57 datapost_file.go:75: info [desIniFile: xml\Media/Media.ini 已存在]
+
+2016/01/26 09:02:57 datapost_file.go:75: info [desIniFile: xml\Media_GA/Media_GA.ini 已存在]
+
+2016/01/26 09:02:57 datapost_file.go:75: info [desIniFile: xml\Nac/Nac.ini 已存在]
+
+2016/01/26 09:02:57 datapost_file.go:75: info [desIniFile: xml\Network/Network.ini 已存在]
+
+2016/01/26 09:02:57 datapost_file.go:75: info [desIniFile: xml\Print/Print.ini 已存在]
+
+2016/01/26 09:02:57 datapost_file.go:75: info [desIniFile: xml\Sensitive/Sensitive.ini 已存在]
+
+2016/01/26 09:02:57 datapost_file.go:75: info [desIniFile: xml\Wgwl/Wgwl.ini 已存在]
+
+2016/01/26 09:15:33 datapost_file.go:75: info [desIniFile: config/config.ini 已存在]
+
+2016/01/26 09:15:33 datapost_file.go:75: info [desIniFile: xml\3in1/3in1.ini 已存在]
+
+2016/01/26 09:15:33 datapost_file.go:75: info [desIniFile: xml\3in1_dc/3in1_dc.ini 已存在]
+
+2016/01/26 09:15:33 datapost_file.go:75: info [desIniFile: xml\CDBurn/CDBurn.ini 已存在]
+
+2016/01/26 09:15:33 datapost_file.go:75: info [desIniFile: xml\Chk/Chk.ini 已存在]
+
+2016/01/26 09:15:33 datapost_file.go:75: info [desIniFile: xml\ChkSelf/ChkSelf.ini 已存在]
+
+2016/01/26 09:15:33 datapost_file.go:75: info [desIniFile: xml\Dd/Dd.ini 已存在]
+
+2016/01/26 09:15:33 datapost_file.go:75: info [desIniFile: xml\HostAudit/HostAudit.ini 已存在]
+
+2016/01/26 09:15:33 datapost_file.go:75: info [desIniFile: xml\Login/Login.ini 已存在]
+
+2016/01/26 09:15:33 datapost_file.go:75: info [desIniFile: xml\Media/Media.ini 已存在]
+
+2016/01/26 09:15:33 datapost_file.go:75: info [desIniFile: xml\Media_GA/Media_GA.ini 已存在]
+
+2016/01/26 09:15:33 datapost_file.go:75: info [desIniFile: xml\Nac/Nac.ini 已存在]
+
+2016/01/26 09:15:33 datapost_file.go:75: info [desIniFile: xml\Network/Network.ini 已存在]
+
+2016/01/26 09:15:33 datapost_file.go:75: info [desIniFile: xml\Print/Print.ini 已存在]
+
+2016/01/26 09:15:33 datapost_file.go:75: info [desIniFile: xml\Sensitive/Sensitive.ini 已存在]
+
+2016/01/26 09:15:33 datapost_file.go:75: info [desIniFile: xml\Wgwl/Wgwl.ini 已存在]
+
+2016/01/26 09:19:29 datapost_file.go:75: info [desIniFile: config/config.ini 已存在]
+
+2016/01/26 09:19:29 datapost_file.go:75: info [desIniFile: xml\3in1/3in1.ini 已存在]
+
+2016/01/26 09:19:29 datapost_file.go:75: info [desIniFile: xml\3in1_dc/3in1_dc.ini 已存在]
+
+2016/01/26 09:19:29 datapost_file.go:75: info [desIniFile: xml\CDBurn/CDBurn.ini 已存在]
+
+2016/01/26 09:19:29 datapost_file.go:75: info [desIniFile: xml\Chk/Chk.ini 已存在]
+
+2016/01/26 09:19:29 datapost_file.go:75: info [desIniFile: xml\ChkSelf/ChkSelf.ini 已存在]
+
+2016/01/26 09:19:29 datapost_file.go:75: info [desIniFile: xml\Dd/Dd.ini 已存在]
+
+2016/01/26 09:19:29 datapost_file.go:75: info [desIniFile: xml\HostAudit/HostAudit.ini 已存在]
+
+2016/01/26 09:19:29 datapost_file.go:75: info [desIniFile: xml\Login/Login.ini 已存在]
+
+2016/01/26 09:19:29 datapost_file.go:75: info [desIniFile: xml\Media/Media.ini 已存在]
+
+2016/01/26 09:19:29 datapost_file.go:75: info [desIniFile: xml\Media_GA/Media_GA.ini 已存在]
+
+2016/01/26 09:19:29 datapost_file.go:75: info [desIniFile: xml\Nac/Nac.ini 已存在]
+
+2016/01/26 09:19:29 datapost_file.go:75: info [desIniFile: xml\Network/Network.ini 已存在]
+
+2016/01/26 09:19:29 datapost_file.go:75: info [desIniFile: xml\Print/Print.ini 已存在]
+
+2016/01/26 09:19:29 datapost_file.go:75: info [desIniFile: xml\Sensitive/Sensitive.ini 已存在]
+
+2016/01/26 09:19:29 datapost_file.go:75: info [desIniFile: xml\Wgwl/Wgwl.ini 已存在]
+
+2016/01/26 10:01:38 datapost_file.go:75: info [desIniFile: config/config.ini 已存在]
+
+2016/01/26 10:01:38 datapost_file.go:75: info [desIniFile: xml\3in1/3in1.ini 已存在]
+
+2016/01/26 10:01:38 datapost_file.go:75: info [desIniFile: xml\3in1_dc/3in1_dc.ini 已存在]
+
+2016/01/26 10:01:38 datapost_file.go:75: info [desIniFile: xml\CDBurn/CDBurn.ini 已存在]
+
+2016/01/26 10:01:38 datapost_file.go:75: info [desIniFile: xml\Chk/Chk.ini 已存在]
+
+2016/01/26 10:01:38 datapost_file.go:75: info [desIniFile: xml\ChkSelf/ChkSelf.ini 已存在]
+
+2016/01/26 10:01:38 datapost_file.go:75: info [desIniFile: xml\Dd/Dd.ini 已存在]
+
+2016/01/26 10:01:38 datapost_file.go:75: info [desIniFile: xml\HostAudit/HostAudit.ini 已存在]
+
+2016/01/26 10:01:38 datapost_file.go:75: info [desIniFile: xml\Login/Login.ini 已存在]
+
+2016/01/26 10:01:38 datapost_file.go:75: info [desIniFile: xml\Media/Media.ini 已存在]
+
+2016/01/26 10:01:38 datapost_file.go:75: info [desIniFile: xml\Media_GA/Media_GA.ini 已存在]
+
+2016/01/26 10:01:38 datapost_file.go:75: info [desIniFile: xml\Nac/Nac.ini 已存在]
+
+2016/01/26 10:01:38 datapost_file.go:75: info [desIniFile: xml\Network/Network.ini 已存在]
+
+2016/01/26 10:01:38 datapost_file.go:75: info [desIniFile: xml\Print/Print.ini 已存在]
+
+2016/01/26 10:01:38 datapost_file.go:75: info [desIniFile: xml\Sensitive/Sensitive.ini 已存在]
+
+2016/01/26 10:01:38 datapost_file.go:75: info [desIniFile: xml\Wgwl/Wgwl.ini 已存在]

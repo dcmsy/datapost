@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+    <log filename='t_deviceviolatelog_log' remark='设备违规日志' runmodel='repeatetimer' isvaldata='false' >
+        <CheckColumnSQL>select name from syscolumns where id=object_id('T_DeviceViolateLog') and name='isreported_3in1'</CheckColumnSQL>
+		<AlterSQL>alter table T_DeviceViolateLog  add isreported_3in1 int default 0</AlterSQL>
+		<UpdateFlagSQL>update T_DeviceViolateLog  set isreported_3in1=0 where isreported_3in1 is null</UpdateFlagSQL>
+		<CheckRowSQL>
+			<![CDATA[ 
+				select rows as rowcnt
+					from sysindexes i
+					inner join sysobjects o
+					on (o.id = i.id and o.xtype='U')
+					where indid <2 and OBJECT_NAME(i.id)='T_DeviceViolateLog'
+				]]>
+		</CheckRowSQL>
+		<UpdateOperSQL></UpdateOperSQL>
+		<DeleteByIDSQL></DeleteByIDSQL>
+		<DataSQL>
+			<![CDATA[ 
+                   select 
+				     CONVERT(varchar(100),a.guid) as id,
+					 hostname,
+					 empname,
+					 deptname,
+					 equname,
+					 exteninfo,
+					 CONVERT(varchar,violatetime,120) as violatetime,
+					 CONVERT(varchar,GETDATE(),120) as impdate
+				from dbo.T_DeviceViolateLog a 
+				inner join T_Equipment b on a.DeviceID =b.EquID 
+				left join v_hostinfo c on a.HostCode=c.HostCode
+				where a.isreported_3in1='0'
+			]]>
+        </DataSQL>
+		<InsertSQL>insert into T_DeviceViolateLog(id,hostname,empname,deptname,equname,exteninfo,violatetime,impdate,sub_sysid,sub_sysname)values(?,?,?,?,?,?,?,?,?,?)</InsertSQL>
+   	    <SuccessSQL>update T_DeviceViolateLog set isreported_3in1=1 where guid in(@[id]) and isreported_3in1=0</SuccessSQL>
+ 	</log>

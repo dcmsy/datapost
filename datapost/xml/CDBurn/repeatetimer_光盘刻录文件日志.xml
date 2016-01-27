@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+    <log filename='cdburn_log_files' remark='刻录文件日志' runmodel='repeatetimer' isvaldata='false' >
+        <CheckColumnSQL>select COLUMN_NAME from information_schema.COLUMNS where TABLE_SCHEMA='@[dbname]' and TABLE_NAME='tb_cdburn_files_log' and COLUMN_NAME='isreported'</CheckColumnSQL>
+		<AlterSQL>alter table tb_cdburn_files_log  add IsReported int default 0</AlterSQL>
+		<UpdateFlagSQL>update tb_cdburn_files_log set IsReported=0 where IsReported is null</UpdateFlagSQL>
+		<CheckRowSQL>select TABLE_ROWS from information_schema.TABLES  where TABLE_SCHEMA='@[dbname]' and TABLE_NAME='tb_cdburn_files_log'</CheckRowSQL>
+		<UpdateOperSQL></UpdateOperSQL>
+		<DeleteByIDSQL></DeleteByIDSQL>
+		<DataSQL>
+		select 
+			id,year_info,month_info,year_month_info,actionid,filename,filetype,filesize,sourcepath,targetpath,createdate,username,deptname,impdate
+		from (
+			select 
+			f.id,
+			DATE_FORMAT(a.create_date ,'%Y') as year_info,
+			DATE_FORMAT(a.create_date ,'%m') as month_info,
+			DATE_FORMAT(a.create_date ,'%Y-%m') as year_month_info,
+			f.action_id as actionid,
+			f.file_name as filename,
+			f.file_type as filetype,
+			f.file_size as filesize,
+			f.source_path as sourcepath,
+			f.target_path as targetpath,
+			f.create_date as createdate,
+			a.responsible_person_name as username,
+			dept.dept_path as deptname,
+			 now() as impdate
+			from tb_cdburn_files_log as f 
+			left join tb_cdburn_action_log a on a.id=f.action_id
+			inner join tb_dept dept on dept.id = a.dept_id
+			where f.isreported=0 limit 10000
+		)a
+        </DataSQL>
+		<InsertSQL>insert into tb_cdburn_files(id,year_info,month_info,year_month_info,actionid,filename,filetype,filesize,sourcepath,targetpath,createdate,username,deptname,impdate,sub_sysid,sub_sysname)values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)</InsertSQL>
+   	    <SuccessSQL>update tb_cdburn_files_log  set IsReported=1 where id in(@[id]) and IsReported=0</SuccessSQL>
+ 	</log>

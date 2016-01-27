@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+    <log filename='media_info' remark='介质基本信息' runmodel='singletimer' isvaldata='true' >
+        <CheckColumnSQL></CheckColumnSQL>
+		<AlterSQL></AlterSQL>
+		<UpdateFlagSQL></UpdateFlagSQL>
+		<CheckRowSQL></CheckRowSQL>
+		
+		<UpdateOperSQL>update tb_media_info set oper_flag='d' where sub_sysid='0601'</UpdateOperSQL>
+		<DeleteByIDSQL>delete from tb_media_info where mediaid=?</DeleteByIDSQL>
+		
+		<DataSQL>
+		<![CDATA[ 
+         select  m.id as mediaid,
+		    m.name as medianname,
+			'0' as year_info,
+			'0' as month_info,
+			'0' as year_month_info,
+			m.sn as sn,
+		
+			m.pid as pid,
+			m.vid as vid,
+			m.type as mediatype,	
+			(case m.type  when 2 then '安全U盘' else '普通U盘' end) as mediatypename,
+			
+			m.state as mediastate,
+			(case m.state when 0 then '未注册' when 1 then '已注册' when 2 then '待注销' when 3 then '已注销' when 4 then '已挂失' end) as mediastatename,
+			(case dic.name when '绝密' then '0' when '机密' then '1' when '秘密' then '2' when '内部' then '3' when '公开' then '4' else '99'end) as seclevel,
+			dic.name as seclevelname,
+			u.name as username,
+		
+			d.name as deptname,
+			(case IFNULL(m.reg_date,'0000-00-00') when  '' then '0000-00-00' else IFNULL(m.reg_date,'0000-00-00') end) as regdate,
+			(case IFNULL(m.unreg_date,'0000-00-00') when  '' then '0000-00-00' else IFNULL(m.unreg_date,'0000-00-00') end) as unregdate,
+			now() as impdate
+			from tb_mediainfo m
+			left join tb_user u on u.id = m.user_id
+			left join tb_dept d on d.id = u.dept_id 
+			left join ts_params_dictionary dic on dic.code = m.sec_level and dic.type='等级'
+			where d.name  is not null
+				and d.name != ''
+				and d.name  != 'N/A'
+				]]>
+        </DataSQL>
+		<InsertSQL>insert into tb_media_info(mediaid,medianname,year_info,month_info,year_month_info,sn,pid,vid,mediatype,mediatypename,mediastate,mediastatename,seclevel,seclevelname,username,deptname,regdate,unregdate,impdate,sub_sysid,sub_sysname)values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)</InsertSQL>
+   	    <SuccessSQL></SuccessSQL>
+ 	</log>
